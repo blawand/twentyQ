@@ -1,6 +1,9 @@
 const questionForm = document.getElementById('question-form');
 const questionInput = document.getElementById('question-input');
 const chat = document.getElementById('chat');
+const modeSelector = document.getElementById('mode-selector');
+
+let gameStarted = false;
 
 questionForm.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -11,17 +14,22 @@ questionForm.addEventListener('submit', async (e) => {
   appendMessage('user', question);
   questionInput.value = '';
 
+  // On the first question, capture and then lock the mode selection.
+  let mode = modeSelector.value;
+  if (!gameStarted) {
+    gameStarted = true;
+    modeSelector.disabled = true;
+  }
+
   try {
-    // Send question to server
+    // Send question (and mode) to server
     const res = await fetch('/ask', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ question })
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question, mode })
     });
     const data = await res.json();
-    // Append server's reply
+    // Append the computer's reply
     appendMessage('computer', data.reply);
   } catch (err) {
     appendMessage('computer', 'Error contacting server.');
