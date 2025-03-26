@@ -1,4 +1,4 @@
-/* Reset default margins/padding */
+/* Reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,85 +6,118 @@
   }
   
   html, body {
-    width: 100%;
     height: 100%;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #f0f4ff 0%, #f8f9fa 100%);
+    font-family: 'Segoe UI', sans-serif;
   }
   
-  /* Container uses full screen */
   .chat-container {
+    width: 90%;
+    max-width: 800px;
+    height: 100vh;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06), 0 0 0 1px #e0e0e0;
+    overflow: hidden;
   }
   
-  /* Header at the top */
   .chat-header {
-    flex: 0 0 auto;
-    background-color: #2196f3;
-    color: white;
+    background-color: #5e60ce;
+    color: #fff;
     padding: 1rem;
-    text-align: center;
-    border-bottom: 1px solid #1976d2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
   
   .mode-selection {
-    margin-top: 0.5rem;
-    font-size: 1rem;
+    margin-bottom: 0.4rem;
   }
   
-  .mode-selection label {
-    margin-right: 0.5rem;
+  .mode-button {
+    background-color: #7678ed;
+    color: #fff;
+    border: none;
+    margin: 0 0.25rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color .2s ease;
   }
   
-  .mode-selection select {
-    padding: 0.25rem;
-    font-size: 1rem;
+  .mode-button:hover,
+  .mode-button.active {
+    background-color: #4c4fff;
   }
   
-  /* Messages area in the middle, scrollable */
+  .mode-button:disabled,
+  .mode-button.disabled-mode {
+    background-color: #a9b0f7;
+    opacity: 0.6;
+    cursor: default;
+  }
+  
+  .mode-button.disabled-mode:hover {
+    background-color: #a9b0f7;
+  }
+  
+  #question-counter {
+    font-size: 0.85rem;
+    background-color: rgba(255,255,255,0.2);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+  }
+  
   .chat-messages {
-    flex: 1 1 auto;
+    flex: 1;
     overflow-y: auto;
     padding: 1rem;
-    background-color: #fff;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    background-color: #f2f3f7;
   }
   
-  /* Each message bubble */
   .message {
-    max-width: 60%;
+    max-width: 75%;
     margin-bottom: 0.75rem;
     padding: 0.75rem 1rem;
-    border-radius: 16px;
-    line-height: 1.4;
-    word-wrap: break-word;
+    border-radius: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    line-height: 1.5;
   }
   
-  /* Computer messages on the left (blueish) */
   .message.computer {
     align-self: flex-start;
-    background-color: #e1f5fe;
-  }
+    background-color: #dfe7fd;
+}
   
-  /* User messages on the right (greenish) */
   .message.user {
     align-self: flex-end;
-    background-color: #c8e6c9;
+    background-color: #e6ffed;
   }
   
-  /* Input area at the bottom */
   .chat-input {
-    flex: 0 0 auto;
     padding: 0.75rem;
-    background-color: #f7f7f7;
+    background-color: #f1f3f5;
     border-top: 1px solid #ccc;
-    display: flex;
   }
   
-  /* The form spans full width, and the input grows */
   #question-form {
     display: flex;
     width: 100%;
@@ -94,16 +127,20 @@
     flex: 1;
     padding: 0.75rem;
     border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
+    border-radius: 6px 0 0 6px;
     font-size: 1rem;
   }
   
   #question-form button {
+    background-color: #5e60ce;
+    color: #fff;
     border: none;
-    background-color: #2196f3;
-    color: white;
     padding: 0 1.25rem;
-    border-radius: 0 4px 4px 0;
+    border-radius: 0 6px 6px 0;
     cursor: pointer;
-    font-size: 1rem;
+    transition: background .2s ease;
+  }
+  
+  #question-form button:hover {
+    background-color: #4c4fff;
   }  

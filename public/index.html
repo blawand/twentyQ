@@ -2,37 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>20 Questions</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="chat-container">
     <header class="chat-header">
-      <h1>20 Questions</h1>
-      <div class="mode-selection">
-        <label for="mode-selector">Select Mode: </label>
-        <select id="mode-selector">
-          <option value="easy">Easy</option>
-          <option value="medium" selected>Medium</option>
-          <option value="difficult">Difficult</option>
-          <option value="impossible">Impossible</option>
-        </select>
+      <h1 class="title">20 Questions</h1>
+      <div class="header-right">
+        <div class="mode-selection">
+          <button class="mode-button" data-mode="easy">Easy</button>
+          <button class="mode-button active" data-mode="medium">Medium</button>
+          <button class="mode-button" data-mode="difficult">Difficult</button>
+          <button class="mode-button" data-mode="impossible">Impossible</button>
+        </div>
+        <div id="question-counter">20/20 remaining</div>
       </div>
     </header>
-    
+
     <main class="chat-messages" id="chat">
-      <!-- Messages will be appended here -->
       <div class="message computer">
         Welcome! I'm thinking of something. Ask me yes/no questions. You have 20 questions.
       </div>
     </main>
-    
+
     <footer class="chat-input">
       <form id="question-form">
         <input 
           type="text" 
           id="question-input" 
-          placeholder="Type your question here..." 
+          placeholder="Type your question here…" 
           autocomplete="off"
         />
         <button type="submit">Send</button>

@@ -34,7 +34,7 @@ async function getGeminiResponse(prompt) {
 
 app.post('/ask', async (req, res) => {
   const { question, mode } = req.body;
-  if (gameOver) return res.json({ reply: 'Game over — refresh to play again.' });
+  if (gameOver) return res.json({ reply: 'Game over — refresh to play again.', questionsRemaining });
 
   if (!selectedMode) {
     selectedMode = mode || 'medium';
@@ -46,10 +46,14 @@ You are playing 20 Questions. The secret answer is "${secretAnswer}" (hidden fro
 If the input is NOT a yes/no question, respond exactly with INVALID. Otherwise respond with "Yes" or "No".
 Question: ${question}`.trim();
 
-  const answer = (await getGeminiResponse(prompt)).toUpperCase();
-  if (answer === 'INVALID') {
+  const raw = await getGeminiResponse(prompt);
+  const normalized = raw.trim().toLowerCase();
+
+  if (normalized === 'invalid') {
     return res.json({ reply: "That wasn't a yes/no question.", questionsRemaining });
   }
+
+  const answer = normalized === 'yes' ? 'Yes' : 'No';
 
   questionsRemaining--;
   if (question.toLowerCase().includes(secretAnswer.toLowerCase())) {
@@ -61,8 +65,6 @@ Question: ${question}`.trim();
   if (questionsRemaining <= 0) {
     gameOver = true;
     reply += ` You've run out of questions! Game over. The answer was "${secretAnswer}".`;
-  } else {
-    reply += ` You have ${questionsRemaining} question${questionsRemaining === 1 ? '' : 's'} remaining.`;
   }
 
   res.json({ reply, questionsRemaining });

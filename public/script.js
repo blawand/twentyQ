@@ -1,37 +1,47 @@
 const questionForm = document.getElementById('question-form');
 const questionInput = document.getElementById('question-input');
 const chat = document.getElementById('chat');
-const modeSelector = document.getElementById('mode-selector');
+const modeButtons = document.querySelectorAll('.mode-button');
+const questionCounter = document.getElementById('question-counter');
 
 let gameStarted = false;
+let selectedMode = 'medium';
+
+modeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (gameStarted) return;
+    modeButtons.forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+    selectedMode = button.getAttribute('data-mode');
+  });
+});
 
 questionForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const question = questionInput.value.trim();
   if (!question) return;
 
-  // Append user's question to chat
   appendMessage('user', question);
   questionInput.value = '';
 
-  // On the first question, capture and then lock the mode selection.
-  let mode = modeSelector.value;
   if (!gameStarted) {
     gameStarted = true;
-    modeSelector.disabled = true;
+    modeButtons.forEach(button => {
+      button.disabled = true;
+      button.classList.add('disabled-mode');
+    });
   }
 
   try {
-    // Send question (and mode) to server
     const res = await fetch('/ask', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ question, mode })
+      body: JSON.stringify({ question, mode: selectedMode })
     });
     const data = await res.json();
-    // Append the computer's reply
     appendMessage('computer', data.reply);
-  } catch (err) {
+    questionCounter.innerText = `${data.questionsRemaining}/20 remaining`;
+  } catch {
     appendMessage('computer', 'Error contacting server.');
   }
 });
