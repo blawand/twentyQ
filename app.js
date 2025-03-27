@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const fs = require('fs');
 const { GoogleGenAI } = require('@google/genai');
 const answersData = require('./answers.json');
 
@@ -18,6 +19,12 @@ function getDailyWord(mode) {
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Ensure scores.json exists
+const scoresFile = path.join(__dirname, 'scores.json');
+if (!fs.existsSync(scoresFile)) {
+  fs.writeFileSync(scoresFile, JSON.stringify([]));
+}
 
 async function getGeminiResponse(prompt) {
   try {
@@ -36,23 +43,25 @@ app.post('/ask', async (req, res) => {
   const { question, mode } = req.body;
   if (gameOver) return res.json({ reply: 'Game over — refresh to play again.', questionsRemaining });
 
+  // Regex check for yes/no question format
+  const yesNoRegex = /^(is|are|am|do|does|did|can|could|should|would|will|have|has|had|may|might|shall|must)\b.*\?*$/i;
+  if (!yesNoRegex.test(question.trim())) {
+    return res.json({ reply: "That wasn't a yes/no question.", questionsRemaining });
+  }
+
   if (!selectedMode) {
     selectedMode = mode || 'medium';
     secretAnswer = getDailyWord(selectedMode);
   }
 
   const prompt = `
-You are playing 20 Questions. The secret answer is "${secretAnswer}" (hidden from user).
-If the input is NOT a yes/no question, respond exactly with INVALID. Otherwise respond with "Yes" or "No".
-Question: ${question}`.trim();
+You are playing 20 Questions. The secret answer is "${secretAnswer}" (hidden).
+Answer the following with exactly "Yes" or "No".
+Question: ${question.trim()}
+  `.trim();
 
   const raw = await getGeminiResponse(prompt);
   const normalized = raw.trim().toLowerCase();
-
-  if (normalized === 'invalid') {
-    return res.json({ reply: "That wasn't a yes/no question.", questionsRemaining });
-  }
-
   const answer = normalized === 'yes' ? 'Yes' : 'No';
 
   questionsRemaining--;
@@ -68,6 +77,33 @@ Question: ${question}`.trim();
   }
 
   res.json({ reply, questionsRemaining });
+});
+
+app.post('/score', (req, res) => {
+  const { name, date, mode, questionsUsed, result } = req.body;
+  if (!name || !date || !mode || questionsUsed == null || !result) {
+    return res.status(400).json({ success: false, message: 'Invalid data.' });
+  }
+  let scores = JSON.parse(fs.readFileSync(scoresFile));
+  const scoreData = { name, date, mode, questionsUsed, result, timestamp: new Date().toISOString() };
+  scores.push(scoreData);
+  fs.writeFileSync(scoresFile, JSON.stringify(scores, null, 2));
+  res.json({ success: true });
+});
+
+app.get('/leaderboard', (req, res) => {
+  let scores = JSON.parse(fs.readFileSync(scoresFile));
+  const { date, mode } = req.query;
+  if (date) {
+    scores = scores.filter(score => score.date === date);
+  }
+  if (mode) {
+    scores = scores.filter(score => score.mode === mode);
+  }
+  // Sort by questionsUsed ascending (fewer questions is better)
+  scores.sort((a, b) => a.questionsUsed - b.questionsUsed);
+  scores = scores.slice(0, 10);
+  res.json(scores);
 });
 
 app.listen(port, () => console.log(`Server running on http://localhost:${port}`));

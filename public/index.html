@@ -38,6 +38,24 @@
         <button type="submit">Send</button>
       </form>
     </footer>
+
+    <!-- New Score Submission, Share Link, and Leaderboard Section -->
+    <div id="score-section" style="display:none; padding: 1rem; background: #f9f9f9;">
+      <h2>Submit Your Score</h2>
+      <input type="text" id="player-name" placeholder="Enter your name" />
+      <button id="submit-score">Submit Score</button>
+
+      <div id="share-link-container" style="display:none; margin-top: 1rem;">
+        <p>Share your result!</p>
+        <input type="text" id="share-link" readonly />
+        <button id="copy-link">Copy Link</button>
+      </div>
+
+      <div id="leaderboard-section" style="margin-top: 1rem;">
+        <h2>Leaderboard</h2>
+        <div id="leaderboard"></div>
+      </div>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>
