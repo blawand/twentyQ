@@ -11,6 +11,7 @@ const app = express();
 const port = 3000;
 
 let secretAnswer, selectedMode, questionsRemaining = 20, gameOver = false;
+let secretSummary = '';
 
 function getDailyWord(mode) {
   const today = new Date().toISOString().split('T')[0];
@@ -24,6 +25,21 @@ app.use(express.static(path.join(__dirname, 'public')));
 const scoresFile = path.join(__dirname, 'scores.json');
 if (!fs.existsSync(scoresFile)) {
   fs.writeFileSync(scoresFile, JSON.stringify([]));
+}
+
+// Retrieve Wikipedia summary for a given term.
+async function getWikiSummary(term) {
+  try {
+    const response = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`);
+    if (!response.ok) {
+      return '';
+    }
+    const data = await response.json();
+    return data.extract || '';
+  } catch (err) {
+    console.error(`Error fetching wiki summary for "${term}":`, err.message);
+    return '';
+  }
 }
 
 async function getGeminiResponse(prompt) {
@@ -52,11 +68,14 @@ app.post('/ask', async (req, res) => {
   if (!selectedMode) {
     selectedMode = mode || 'medium';
     secretAnswer = getDailyWord(selectedMode);
+    secretSummary = await getWikiSummary(secretAnswer);
   }
 
+  const factContext = secretSummary || "No additional factual context is available.";
   const prompt = `
-You are playing 20 Questions. The secret answer is "${secretAnswer}" (hidden).
-Answer the following with exactly "Yes" or "No".
+You are playing 20 Questions. The secret answer is "${secretAnswer}".
+Factual description: ${factContext}
+When asked a yes/no question about the answer, think through the facts in your head and answer with exactly "Yes" or "No" only.
 Question: ${question.trim()}
   `.trim();
 

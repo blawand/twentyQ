@@ -105,7 +105,7 @@
   .message.computer {
     align-self: flex-start;
     background-color: #dfe7fd;
-}
+  }
   
   .message.user {
     align-self: flex-end;
@@ -143,8 +143,115 @@
   
   #question-form button:hover {
     background-color: #4c4fff;
-  }  
-
+  }
+  
+  /* ------------------- */
+  /* Post Game & Leaderboard Styling */
+  /* ------------------- */
+  
+  #score-section {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    border-top: 1px solid #ccc;
+  }
+  
+  #score-section h2 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+  
+  #score-section input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  #score-section button {
+    background-color: #5e60ce;
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    transition: background .2s ease;
+  }
+  
+  #score-section button:hover {
+    background-color: #4c4fff;
+  }
+  
+  #share-link-container {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: #dfe7fd;
+    border-radius: 6px;
+    text-align: center;
+  }
+  
+  #share-link-container p {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  #share-link-container input[type="text"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  
+  #leaderboard-section {
+    margin-top: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    padding: 1rem;
+  }
+  
+  #leaderboard-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Leaderboard Table */
+  #leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #leaderboard th, 
+  #leaderboard td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  #leaderboard th {
+    background-color: #f2f3f7;
+    font-weight: bold;
+  }
+  
+  #leaderboard tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  /* ------------------- */
+  /* Responsive Adjustments */
+  /* ------------------- */
+  
   @media (max-width: 600px) {
     .chat-container {
       width: 100%;
@@ -180,14 +287,14 @@
     }
   
     .mode-button {
-        width: 100%; /* Fill grid cell width */
-        padding: 0.6rem 0.5rem; /* Added horizontal padding */
-        font-size: 0.9rem; /* Slightly smaller font */
-        text-align: center;
-        border-radius: 6px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+      width: 100%;
+      padding: 0.6rem 0.5rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border-radius: 6px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   
     #question-counter {
@@ -220,5 +327,19 @@
     #question-form button {
       font-size: 1rem;
       padding: 0 1.2rem;
+    }
+  
+    /* Score & Leaderboard responsive tweaks */
+    #score-section, #leaderboard-section {
+      padding: 1rem;
+    }
+    
+    #score-section h2, #leaderboard-section h2 {
+      font-size: 1.2rem;
+    }
+    
+    #score-section button, 
+    #share-link-container input[type="text"] {
+      font-size: 1rem;
     }
   }  
