@@ -3,60 +3,82 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>20 Questions</title>
+  <title>20 Questions - Daily Challenge</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Add Favicon later -->
+  <!-- <link rel="icon" href="/favicon.ico" sizes="any"> -->
 </head>
 <body>
   <div class="chat-container">
     <header class="chat-header">
       <h1 class="title">20 Questions</h1>
       <div class="header-right">
-        <div class="mode-selection">
-          <button class="mode-button" data-mode="easy">Easy</button>
-          <button class="mode-button active" data-mode="medium">Medium</button>
-          <button class="mode-button" data-mode="difficult">Difficult</button>
-          <button class="mode-button" data-mode="impossible">Impossible</button>
+        <div class="mode-selection" role="radiogroup" aria-labelledby="mode-label">
+          <span id="mode-label" class="visually-hidden">Select game difficulty:</span> <!-- Hidden label for accessibility -->
+          <button class="mode-button" data-mode="easy" role="radio" aria-checked="false">Easy</button>
+          <button class="mode-button active" data-mode="medium" role="radio" aria-checked="true">Medium</button> <!-- Default active -->
+          <button class="mode-button" data-mode="difficult" role="radio" aria-checked="false">Difficult</button>
+          <button class="mode-button" data-mode="impossible" role="radio" aria-checked="false">Impossible</button>
         </div>
-        <div id="question-counter">20/20 remaining</div>
+        <div id="question-counter" aria-live="polite">20/20 remaining</div>
       </div>
     </header>
 
-    <main class="chat-messages" id="chat">
-      <div class="message computer">
-        Welcome! I'm thinking of something. Ask me yes/no questions. You have 20 questions.
-      </div>
+    <!-- Main chat area -->
+    <main class="chat-messages" id="chat" aria-live="polite" aria-atomic="false">
+      <!-- Messages will be appended here by script.js -->
+      <!-- Initial message added by script -->
     </main>
 
+    <!-- Input Footer -->
     <footer class="chat-input">
       <form id="question-form">
-        <input 
-          type="text" 
-          id="question-input" 
-          placeholder="Type your question here…" 
+        <label for="question-input" class="visually-hidden">Your Question:</label> <!-- Hidden label -->
+        <input
+          type="text"
+          id="question-input"
+          placeholder="Ask a Yes/No question…"
           autocomplete="off"
+          aria-label="Type your yes or no question here"
+          required
         />
-        <button type="submit">Send</button>
+        <button type="submit" aria-label="Send question">Send</button>
       </form>
     </footer>
 
-    <!-- New Score Submission, Share Link, and Leaderboard Section -->
-    <div id="score-section" style="display:none; padding: 1rem; background: #f9f9f9;">
-      <h2>Submit Your Score</h2>
-      <input type="text" id="player-name" placeholder="Enter your name" />
-      <button id="submit-score">Submit Score</button>
+    <!-- Post Game Section (Score Submission, Share, Leaderboard) -->
+    <section id="post-game-section" aria-labelledby="post-game-heading">
+      <!-- Score Submission -->
+       <div id="score-submission">
+           <h2 id="post-game-heading">Game Over! Submit Your Score?</h2>
+           <label for="player-name" class="visually-hidden">Your Name:</label>
+           <input type="text" id="player-name" placeholder="Enter your name (optional)" aria-label="Enter your name for the leaderboard"/>
+           <button id="submit-score-button">Submit Score</button>
+       </div>
 
-      <div id="share-link-container" style="display:none; margin-top: 1rem;">
-        <p>Share your result!</p>
-        <input type="text" id="share-link" readonly />
-        <button id="copy-link">Copy Link</button>
+      <!-- Share Link -->
+      <div id="share-link-container" style="display:none;"> <!-- Start hidden -->
+        <p>Share your achievement!</p>
+         <label for="share-link-input" class="visually-hidden">Share message and link:</label>
+        <input type="text" id="share-link-input" readonly aria-label="Share message and link"/>
+        <button id="copy-link-button">Copy Share Message</button>
       </div>
 
-      <div id="leaderboard-section" style="margin-top: 1rem;">
-        <h2>Leaderboard</h2>
-        <div id="leaderboard"></div>
+      <!-- Leaderboard -->
+      <div id="leaderboard-section">
+        <h2>Today's Leaderboard (<span id="leaderboard-mode">Medium</span>)</h2> <!-- Mode will be updated -->
+        <div id="leaderboard" aria-live="polite">
+          <!-- Leaderboard table or placeholder text will be inserted here -->
+          <p id="leaderboard-placeholder">Submit your score to see the leaderboard!</p>
+        </div>
       </div>
-    </div>
-  </div>
-  <script src="script.js"></script>
+    </section>
+
+  </div> <!-- end chat-container -->
+
+  <!-- Visually Hidden Class for Accessibility Labels -->
+  <style>.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }</style>
+
+  <script src="script.js" defer></script> <!-- Use defer -->
 </body>
 </html>
