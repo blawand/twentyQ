@@ -1,5 +1,5 @@
 {
-    "name": "twenty-questions-game",
+    "name": "20questions",
     "version": "1.0.0",
     "description": "20 Questions game where the computer uses Gemini API to answer yes/no questions and the secret answer changes daily.",
     "main": "app.js",

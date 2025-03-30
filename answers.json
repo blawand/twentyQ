@@ -1,0 +1,2192 @@
+{
+    "2025-01-01": {
+      "easy": "Sun",
+      "medium": "Bicycle",
+      "difficult": "Origami",
+      "impossible": "Synesthesia"
+    },
+    "2025-01-02": {
+      "easy": "Water",
+      "medium": "Microphone",
+      "difficult": "Quokka",
+      "impossible": "Sputnik"
+    },
+    "2025-01-03": {
+      "easy": "Tree",
+      "medium": "Telescope",
+      "difficult": "Abacus",
+      "impossible": "Astrolabe"
+    },
+    "2025-01-04": {
+      "easy": "Cat",
+      "medium": "Chess",
+      "difficult": "Fjord",
+      "impossible": "Theremin"
+    },
+    "2025-01-05": {
+      "easy": "Dog",
+      "medium": "Recycling",
+      "difficult": "Axolotl",
+      "impossible": "Mycelium"
+    },
+    "2025-01-06": {
+      "easy": "Book",
+      "medium": "Penguin",
+      "difficult": "Calligraphy",
+      "impossible": "Solipsism"
+    },
+    "2025-01-07": {
+      "easy": "Chair",
+      "medium": "Computer",
+      "difficult": "Photosynthesis",
+      "impossible": "Antikythera mechanism"
+    },
+    "2025-01-08": {
+      "easy": "Table",
+      "medium": "Camera",
+      "difficult": "Seismograph",
+      "impossible": "Pangolin"
+    },
+    "2025-01-09": {
+      "easy": "Apple",
+      "medium": "Piano",
+      "difficult": "Algorithm",
+      "impossible": "Tardigrade"
+    },
+    "2025-01-10": {
+      "easy": "Banana",
+      "medium": "Guitar",
+      "difficult": "Hieroglyphics",
+      "impossible": "Okapi"
+    },
+    "2025-01-11": {
+      "easy": "Car",
+      "medium": "Map",
+      "difficult": "Sonnet",
+      "impossible": "Coelacanth"
+    },
+    "2025-01-12": {
+      "easy": "Ball",
+      "medium": "Compass",
+      "difficult": "Barometer",
+      "impossible": "Saola"
+    },
+    "2025-01-13": {
+      "easy": "Bed",
+      "medium": "Globe",
+      "difficult": "Ecosystem",
+      "impossible": "Kakapo"
+    },
+    "2025-01-14": {
+      "easy": "Shoe",
+      "medium": "Volcano",
+      "difficult": "Tsunami",
+      "impossible": "Hoatzin"
+    },
+    "2025-01-15": {
+      "easy": "Hand",
+      "medium": "Desert",
+      "difficult": "Inflation (economic)",
+      "impossible": "Shoebill Stork"
+    },
+    "2025-01-16": {
+      "easy": "Foot",
+      "medium": "Forest",
+      "difficult": "Democracy",
+      "impossible": "Aye-aye"
+    },
+    "2025-01-17": {
+      "easy": "Moon",
+      "medium": "River",
+      "difficult": "Renaissance",
+      "impossible": "Fossa"
+    },
+    "2025-01-18": {
+      "easy": "Star",
+      "medium": "Lake",
+      "difficult": "Impressionism",
+      "impossible": "Binturong"
+    },
+    "2025-01-19": {
+      "easy": "Cloud",
+      "medium": "Ocean",
+      "difficult": "Cubism",
+      "impossible": "Numbat"
+    },
+    "2025-01-20": {
+      "easy": "Rain",
+      "medium": "Island",
+      "difficult": "Surrealism",
+      "impossible": "Bilby"
+    },
+    "2025-01-21": {
+      "easy": "Snow",
+      "medium": "Mountain",
+      "difficult": "DNA",
+      "impossible": "Quoll"
+    },
+    "2025-01-22": {
+      "easy": "Bread",
+      "medium": "Bridge",
+      "difficult": "Chromosome",
+      "impossible": "Tasmanian Devil"
+    },
+    "2025-01-23": {
+      "easy": "Milk",
+      "medium": "Train",
+      "difficult": "Mitochondria",
+      "impossible": "Yapok"
+    },
+    "2025-01-24": {
+      "easy": "Egg",
+      "medium": "Airplane",
+      "difficult": "Neuron",
+      "impossible": "Solenodon"
+    },
+    "2025-01-25": {
+      "easy": "Fish",
+      "medium": "Boat",
+      "difficult": "Synapse",
+      "impossible": "Tenrec"
+    },
+    "2025-01-26": {
+      "easy": "Bird",
+      "medium": "Ship",
+      "difficult": "Enzyme",
+      "impossible": "Colugo"
+    },
+    "2025-01-27": {
+      "easy": "Flower",
+      "medium": "Hospital",
+      "difficult": "Catalyst",
+      "impossible": "Tree Shrew"
+    },
+    "2025-01-28": {
+      "easy": "Grass",
+      "medium": "School",
+      "difficult": "Alloy",
+      "impossible": "Glycolysis"
+    },
+    "2025-01-29": {
+      "easy": "House",
+      "medium": "Library",
+      "difficult": "Polymer",
+      "impossible": "Krebs Cycle"
+    },
+    "2025-01-30": {
+      "easy": "Door",
+      "medium": "Museum",
+      "difficult": "Archipelago",
+      "impossible": "Electron Transport Chain"
+    },
+    "2025-01-31": {
+      "easy": "Window",
+      "medium": "Restaurant",
+      "difficult": "Peninsula",
+      "impossible": "Meiosis"
+    },
+    "2025-02-01": {
+      "easy": "Pencil",
+      "medium": "Hotel",
+      "difficult": "Isthmus",
+      "impossible": "Mitosis"
+    },
+    "2025-02-02": {
+      "easy": "Paper",
+      "medium": "Park",
+      "difficult": "Strait",
+      "impossible": "Homeostasis"
+    },
+    "2025-02-03": {
+      "easy": "Phone",
+      "medium": "Zoo",
+      "difficult": "Monsoon",
+      "impossible": "Allostasis"
+    },
+    "2025-02-04": {
+      "easy": "Clock",
+      "medium": "Farm",
+      "difficult": "Equinox",
+      "impossible": "Stochastic Process"
+    },
+    "2025-02-05": {
+      "easy": "Spoon",
+      "medium": "Tractor",
+      "difficult": "Solstice",
+      "impossible": "Fourier Transform"
+    },
+    "2025-02-06": {
+      "easy": "Fork",
+      "medium": "Hammer",
+      "difficult": "Anemometer",
+      "impossible": "Laplace Transform"
+    },
+    "2025-02-07": {
+      "easy": "Knife",
+      "medium": "Saw",
+      "difficult": "Hygrometer",
+      "impossible": "Maxwell's Equations"
+    },
+    "2025-02-08": {
+      "easy": "Plate",
+      "medium": "Screwdriver",
+      "difficult": "Sextant",
+      "impossible": "Schrödinger Equation"
+    },
+    "2025-02-09": {
+      "easy": "Cup",
+      "medium": "Nail",
+      "difficult": "Sundial",
+      "impossible": "Heisenberg Uncertainty Principle"
+    },
+    "2025-02-10": {
+      "easy": "Hat",
+      "medium": "Screw",
+      "difficult": "Loom",
+      "impossible": "Special Relativity"
+    },
+    "2025-02-11": {
+      "easy": "Shirt",
+      "medium": "Rope",
+      "difficult": "Pottery Wheel",
+      "impossible": "General Relativity"
+    },
+    "2025-02-12": {
+      "easy": "Pants",
+      "medium": "Ladder",
+      "difficult": "Chisel",
+      "impossible": "String Theory"
+    },
+    "2025-02-13": {
+      "easy": "Sock",
+      "medium": "Key",
+      "difficult": "Mortar and Pestle",
+      "impossible": "M-Theory"
+    },
+    "2025-02-14": {
+      "easy": "Heart",
+      "medium": "Lock",
+      "difficult": "Aqueduct",
+      "impossible": "Dark Matter"
+    },
+    "2025-02-15": {
+      "easy": "Light",
+      "medium": "Coin",
+      "difficult": "Catacomb",
+      "impossible": "Dark Energy"
+    },
+    "2025-02-16": {
+      "easy": "Dark",
+      "medium": "Money",
+      "difficult": "Colosseum",
+      "impossible": "Black Hole"
+    },
+    "2025-02-17": {
+      "easy": "Sleep",
+      "medium": "Letter",
+      "difficult": "Parthenon",
+      "impossible": "Neutron Star"
+    },
+    "2025-02-18": {
+      "easy": "Air",
+      "medium": "Stamp",
+      "difficult": "Pyramid",
+      "impossible": "White Dwarf"
+    },
+    "2025-02-19": {
+      "easy": "Fire",
+      "medium": "Envelope",
+      "difficult": "Sphinx",
+      "impossible": "Supernova"
+    },
+    "2025-02-20": {
+      "easy": "Earth",
+      "medium": "Calendar",
+      "difficult": "Rosetta Stone",
+      "impossible": "Nebula"
+    },
+    "2025-02-21": {
+      "easy": "Music",
+      "medium": "Watch",
+      "difficult": "Magna Carta",
+      "impossible": "Galaxy Cluster"
+    },
+    "2025-02-22": {
+      "easy": "Road",
+      "medium": "Glasses",
+      "difficult": "Feudalism",
+      "impossible": "Quasar"
+    },
+    "2025-02-23": {
+      "easy": "Sky",
+      "medium": "Mirror",
+      "difficult": "Mercantilism",
+      "impossible": "Pulsar"
+    },
+    "2025-02-24": {
+      "easy": "Sea",
+      "medium": "Brush",
+      "difficult": "Capitalism",
+      "impossible": "Magnetar"
+    },
+    "2025-02-25": {
+      "easy": "Baby",
+      "medium": "Comb",
+      "difficult": "Socialism",
+      "impossible": "Cepheid Variable"
+    },
+    "2025-02-26": {
+      "easy": "Mother",
+      "medium": "Soap",
+      "difficult": "Communism",
+      "impossible": "Hubble Constant"
+    },
+    "2025-02-27": {
+      "easy": "Father",
+      "medium": "Towel",
+      "difficult": "Haiku",
+      "impossible": "Cosmic Microwave Background"
+    },
+    "2025-02-28": {
+      "easy": "Friend",
+      "medium": "Blanket",
+      "difficult": "Limerick",
+      "impossible": "Cosmological Inflation"
+    },
+    "2025-03-01": {
+      "easy": "Game",
+      "medium": "Pillow",
+      "difficult": "Ballad",
+      "impossible": "Big Bang Nucleosynthesis"
+    },
+    "2025-03-02": {
+      "easy": "Color",
+      "medium": "Umbrella",
+      "difficult": "Epic Poem",
+      "impossible": "Feynman Diagram"
+    },
+    "2025-03-03": {
+      "easy": "Red",
+      "medium": "Raincoat",
+      "difficult": "Tragedy",
+      "impossible": "Quantum Entanglement"
+    },
+    "2025-03-04": {
+      "easy": "Blue",
+      "medium": "Boots",
+      "difficult": "Comedy",
+      "impossible": "Superposition"
+    },
+    "2025-03-05": {
+      "easy": "Green",
+      "medium": "Gloves",
+      "difficult": "Satire",
+      "impossible": "Quantum Tunneling"
+    },
+    "2025-03-06": {
+      "easy": "Yellow",
+      "medium": "Scarf",
+      "difficult": "Allegory",
+      "impossible": "Bose-Einstein Condensate"
+    },
+    "2025-03-07": {
+      "easy": "Orange",
+      "medium": "Zipper",
+      "difficult": "Metaphor",
+      "impossible": "Fermi-Dirac Statistics"
+    },
+    "2025-03-08": {
+      "easy": "Purple",
+      "medium": "Button",
+      "difficult": "Simile",
+      "impossible": "Standard Model (Physics)"
+    },
+    "2025-03-09": {
+      "easy": "White",
+      "medium": "Thread",
+      "difficult": "Personification",
+      "impossible": "Higgs Boson"
+    },
+    "2025-03-10": {
+      "easy": "Black",
+      "medium": "Needle",
+      "difficult": "Hyperbole",
+      "impossible": "Quark"
+    },
+    "2025-03-11": {
+      "easy": "Brown",
+      "medium": "Scissors",
+      "difficult": "Onomatopoeia",
+      "impossible": "Lepton"
+    },
+    "2025-03-12": {
+      "easy": "Gray",
+      "medium": "Glue",
+      "difficult": "Alliteration",
+      "impossible": "Gluon"
+    },
+    "2025-03-13": {
+      "easy": "Pink",
+      "medium": "Tape",
+      "difficult": "Assonance",
+      "impossible": "Photon"
+    },
+    "2025-03-14": {
+      "easy": "Gold",
+      "medium": "Battery",
+      "difficult": "Consonance",
+      "impossible": "Neutrino Oscillation"
+    },
+    "2025-03-15": {
+      "easy": "Silver",
+      "medium": "Magnet",
+      "difficult": "Rhyme Scheme",
+      "impossible": "Cherenkov Radiation"
+    },
+    "2025-03-16": {
+      "easy": "Box",
+      "medium": "Wheel",
+      "difficult": "Meter (poetry)",
+      "impossible": "Synchrotron Radiation"
+    },
+    "2025-03-17": {
+      "easy": "Bag",
+      "medium": "Engine",
+      "difficult": "Iambic Pentameter",
+      "impossible": "Carbon Nanotube"
+    },
+    "2025-03-18": {
+      "easy": "Key",
+      "medium": "Keyboard",
+      "difficult": "Fugue",
+      "impossible": "Graphene"
+    },
+    "2025-03-19": {
+      "easy": "Lock",
+      "medium": "Mouse (computer)",
+      "difficult": "Concerto",
+      "impossible": "Fullerene"
+    },
+    "2025-03-20": {
+      "easy": "Wall",
+      "medium": "Screen",
+      "difficult": "Symphony",
+      "impossible": "CRISPR"
+    },
+    "2025-03-21": {
+      "easy": "Floor",
+      "medium": "Printer",
+      "difficult": "Opera",
+      "impossible": "Polymerase Chain Reaction (PCR)"
+    },
+    "2025-03-22": {
+      "easy": "Ceiling",
+      "medium": "Scanner",
+      "difficult": "Ballet",
+      "impossible": "Gel Electrophoresis"
+    },
+    "2025-03-23": {
+      "easy": "Roof",
+      "medium": "Internet",
+      "difficult": "Tapestry",
+      "impossible": "Mass Spectrometry"
+    },
+    "2025-03-24": {
+      "easy": "Stairs",
+      "medium": "Email",
+      "difficult": "Fresco",
+      "impossible": "NMR Spectroscopy"
+    },
+    "2025-03-25": {
+      "easy": "Elevator",
+      "medium": "Website",
+      "difficult": "Mosaic",
+      "impossible": "X-ray Crystallography"
+    },
+    "2025-03-26": {
+      "easy": "Desk",
+      "medium": "Bookcase",
+      "difficult": "Stained Glass",
+      "impossible": "Electron Microscope"
+    },
+    "2025-03-27": {
+      "easy": "Lamp",
+      "medium": "Shelf",
+      "difficult": "Gargoyle",
+      "impossible": "Atomic Force Microscope"
+    },
+    "2025-03-28": {
+      "easy": "Lightbulb",
+      "medium": "Drawer",
+      "difficult": "Buttress",
+      "impossible": "Scanning Tunneling Microscope"
+    },
+    "2025-03-29": {
+      "easy": "Candle",
+      "medium": "Closet",
+      "difficult": "Arch",
+      "impossible": "Differential Equation"
+    },
+    "2025-03-30": {
+      "easy": "Mirror",
+      "medium": "Refrigerator",
+      "difficult": "Dome",
+      "impossible": "Integral Calculus"
+    },
+    "2025-03-31": {
+      "easy": "Towel",
+      "medium": "Oven",
+      "difficult": "Column (architecture)",
+      "impossible": "Linear Algebra"
+    },
+    "2025-04-01": {
+      "easy": "Soap",
+      "medium": "Stove",
+      "difficult": "Acupuncture",
+      "impossible": "Abstract Algebra"
+    },
+    "2025-04-02": {
+      "easy": "Shampoo",
+      "medium": "Microwave",
+      "difficult": "Philosophy",
+      "impossible": "Group Theory"
+    },
+    "2025-04-03": {
+      "easy": "Toothbrush",
+      "medium": "Sink",
+      "difficult": "Ethics",
+      "impossible": "Ring Theory"
+    },
+    "2025-04-04": {
+      "easy": "Toothpaste",
+      "medium": "Toilet",
+      "difficult": "Logic",
+      "impossible": "Field Theory"
+    },
+    "2025-04-05": {
+      "easy": "Comb",
+      "medium": "Shower",
+      "difficult": "Metaphysics",
+      "impossible": "Topology"
+    },
+    "2025-04-06": {
+      "easy": "Brush (hair)",
+      "medium": "Bathtub",
+      "difficult": "Epistemology",
+      "impossible": "Knot Theory"
+    },
+    "2025-04-07": {
+      "easy": "Scissors",
+      "medium": "Painting",
+      "difficult": "Aesthetics",
+      "impossible": "Chaos Theory"
+    },
+    "2025-04-08": {
+      "easy": "Glue",
+      "medium": "Sculpture",
+      "difficult": "Stoicism",
+      "impossible": "Fractal"
+    },
+    "2025-04-09": {
+      "easy": "Tape",
+      "medium": "Photograph",
+      "difficult": "Existentialism",
+      "impossible": "Game Theory"
+    },
+    "2025-04-10": {
+      "easy": "Ruler",
+      "medium": "Movie",
+      "difficult": "Utilitarianism",
+      "impossible": "Nash Equilibrium"
+    },
+    "2025-04-11": {
+      "easy": "Eraser",
+      "medium": "Song",
+      "difficult": "Buddhism",
+      "impossible": "Prisoner's Dilemma"
+    },
+    "2025-04-12": {
+      "easy": "Pen",
+      "medium": "Dance",
+      "difficult": "Hinduism",
+      "impossible": "Bayesian Inference"
+    },
+    "2025-04-13": {
+      "easy": "Crayon",
+      "medium": "Play (theater)",
+      "difficult": "Islam",
+      "impossible": "Markov Chain"
+    },
+    "2025-04-14": {
+      "easy": "Paint",
+      "medium": "Story",
+      "difficult": "Judaism",
+      "impossible": "Monte Carlo Method"
+    },
+    "2025-04-15": {
+      "easy": "Clay",
+      "medium": "Poem",
+      "difficult": "Christianity",
+      "impossible": "Genetic Algorithm"
+    },
+    "2025-04-16": {
+      "easy": "String",
+      "medium": "Recipe",
+      "difficult": "Mythology",
+      "impossible": "Neural Network"
+    },
+    "2025-04-17": {
+      "easy": "Button",
+      "medium": "Ingredient",
+      "difficult": "Zeus",
+      "impossible": "Deep Learning"
+    },
+    "2025-04-18": {
+      "easy": "Zipper",
+      "medium": "Flour",
+      "difficult": "Hera",
+      "impossible": "Artificial Intelligence"
+    },
+    "2025-04-19": {
+      "easy": "Needle",
+      "medium": "Sugar",
+      "difficult": "Poseidon",
+      "impossible": "Turing Machine"
+    },
+    "2025-04-20": {
+      "easy": "Thread",
+      "medium": "Salt",
+      "difficult": "Hades",
+      "impossible": "Gödel's Incompleteness Theorems"
+    },
+    "2025-04-21": {
+      "easy": "Fabric",
+      "medium": "Pepper",
+      "difficult": "Apollo",
+      "impossible": "P versus NP Problem"
+    },
+    "2025-04-22": {
+      "easy": "Yarn",
+      "medium": "Spice",
+      "difficult": "Artemis",
+      "impossible": "Riemann Hypothesis"
+    },
+    "2025-04-23": {
+      "easy": "Cotton",
+      "medium": "Coffee",
+      "difficult": "Athena",
+      "impossible": "Byzantine Generals Problem"
+    },
+    "2025-04-24": {
+      "easy": "Wool",
+      "medium": "Tea",
+      "difficult": "Ares",
+      "impossible": "Halting Problem"
+    },
+    "2025-04-25": {
+      "easy": "Silk",
+      "medium": "Juice",
+      "difficult": "Aphrodite",
+      "impossible": "Occam's Razor"
+    },
+    "2025-04-26": {
+      "easy": "Leather",
+      "medium": "Soda",
+      "difficult": "Hermes",
+      "impossible": "Placebo Effect"
+    },
+    "2025-04-27": {
+      "easy": "Fur",
+      "medium": "Sandwich",
+      "difficult": "Hephaestus",
+      "impossible": "Nocebo Effect"
+    },
+    "2025-04-28": {
+      "easy": "Feather",
+      "medium": "Pizza",
+      "difficult": "Dionysus",
+      "impossible": "Confirmation Bias"
+    },
+    "2025-04-29": {
+      "easy": "Scale (fish/reptile)",
+      "medium": "Pasta",
+      "difficult": "Persephone",
+      "impossible": "Cognitive Dissonance"
+    },
+    "2025-04-30": {
+      "easy": "Shell",
+      "medium": "Rice",
+      "difficult": "Odin",
+      "impossible": "Dunning-Kruger Effect"
+    },
+    "2025-05-01": {
+      "easy": "Seed",
+      "medium": "Potato",
+      "difficult": "Thor",
+      "impossible": "Impostor Syndrome"
+    },
+    "2025-05-02": {
+      "easy": "Sprout",
+      "medium": "Tomato",
+      "difficult": "Loki",
+      "impossible": "Stockholm Syndrome"
+    },
+    "2025-05-03": {
+      "easy": "Leaf",
+      "medium": "Onion",
+      "difficult": "Freya",
+      "impossible": "Milgram Experiment"
+    },
+    "2025-05-04": {
+      "easy": "Stem",
+      "medium": "Garlic",
+      "difficult": "Ra",
+      "impossible": "Stanford Prison Experiment"
+    },
+    "2025-05-05": {
+      "easy": "Root",
+      "medium": "Lemon",
+      "difficult": "Osiris",
+      "impossible": "Asch Conformity Experiments"
+    },
+    "2025-05-06": {
+      "easy": "Branch",
+      "medium": "Orange (fruit)",
+      "difficult": "Isis",
+      "impossible": "Sapir-Whorf Hypothesis"
+    },
+    "2025-05-07": {
+      "easy": "Trunk",
+      "medium": "Grape",
+      "difficult": "Anubis",
+      "impossible": "Universal Grammar"
+    },
+    "2025-05-08": {
+      "easy": "Bark",
+      "medium": "Strawberry",
+      "difficult": "Horus",
+      "impossible": "Phoneme"
+    },
+    "2025-05-09": {
+      "easy": "Flower",
+      "medium": "Chocolate",
+      "difficult": "Monopoly (game concept)",
+      "impossible": "Morpheme"
+    },
+    "2025-05-10": {
+      "easy": "Petal",
+      "medium": "Ice Cream",
+      "difficult": "Checkers",
+      "impossible": "Syntax"
+    },
+    "2025-05-11": {
+      "easy": "Thorn",
+      "medium": "Cake",
+      "difficult": "Go (game)",
+      "impossible": "Semantics"
+    },
+    "2025-05-12": {
+      "easy": "Vine",
+      "medium": "Cookie",
+      "difficult": "Sudoku",
+      "impossible": "Pragmatics"
+    },
+    "2025-05-13": {
+      "easy": "Moss",
+      "medium": "Candy",
+      "difficult": "Crossword Puzzle",
+      "impossible": "Dead Sea Scrolls"
+    },
+    "2025-05-14": {
+      "easy": "Fern",
+      "medium": "Football",
+      "difficult": "Jigsaw Puzzle",
+      "impossible": "Voynich Manuscript"
+    },
+    "2025-05-15": {
+      "easy": "Mushroom",
+      "medium": "Basketball",
+      "difficult": "Rubik's Cube",
+      "impossible": "Codex Gigas"
+    },
+    "2025-05-16": {
+      "easy": "Algae",
+      "medium": "Baseball",
+      "difficult": "Velociraptor",
+      "impossible": "Oracle Bones"
+    },
+    "2025-05-17": {
+      "easy": "Seaweed",
+      "medium": "Tennis",
+      "difficult": "Triceratops",
+      "impossible": "Linear B"
+    },
+    "2025-05-18": {
+      "easy": "Coral",
+      "medium": "Golf",
+      "difficult": "Stegosaurus",
+      "impossible": "Cuneiform"
+    },
+    "2025-05-19": {
+      "easy": "Sponge",
+      "medium": "Swimming",
+      "difficult": "Pterodactyl",
+      "impossible": "Hieratic Script"
+    },
+    "2025-05-20": {
+      "easy": "Jellyfish",
+      "medium": "Running",
+      "difficult": "Ichthyosaur",
+      "impossible": "Demotic Script"
+    },
+    "2025-05-21": {
+      "easy": "Starfish",
+      "medium": "Walking",
+      "difficult": "Plesiosaur",
+      "impossible": "Ogham"
+    },
+    "2025-05-22": {
+      "easy": "Crab",
+      "medium": "Jumping",
+      "difficult": "Ammonite",
+      "impossible": "Runic Alphabet"
+    },
+    "2025-05-23": {
+      "easy": "Lobster",
+      "medium": "Singing",
+      "difficult": "Trilobite",
+      "impossible": "Etruscan Language"
+    },
+    "2025-05-24": {
+      "easy": "Shrimp",
+      "medium": "Reading",
+      "difficult": "Lichen",
+      "impossible": "Basque Language"
+    },
+    "2025-05-25": {
+      "easy": "Oyster",
+      "medium": "Writing",
+      "difficult": "Bacteria",
+      "impossible": "Pirahã Language"
+    },
+    "2025-05-26": {
+      "easy": "Clam",
+      "medium": "Drawing",
+      "difficult": "Virus",
+      "impossible": "Silbo Gomero"
+    },
+    "2025-05-27": {
+      "easy": "Snail",
+      "medium": "Cooking",
+      "difficult": "Amoeba",
+      "impossible": "Klingon"
+    },
+    "2025-05-28": {
+      "easy": "Slug",
+      "medium": "Baking",
+      "difficult": "Paramecium",
+      "impossible": "Esperanto"
+    },
+    "2025-05-29": {
+      "easy": "Worm",
+      "medium": "Cleaning",
+      "difficult": "Euglena",
+      "impossible": "Ziggurat"
+    },
+    "2025-05-30": {
+      "easy": "Leech",
+      "medium": "Shopping",
+      "difficult": "Platypus",
+      "impossible": "Mastaba"
+    },
+    "2025-05-31": {
+      "easy": "Insect",
+      "medium": "Traveling",
+      "difficult": "Echidna",
+      "impossible": "Obelisk"
+    },
+    "2025-06-01": {
+      "easy": "Ant",
+      "medium": "Camping",
+      "difficult": "Kangaroo",
+      "impossible": "Stele"
+    },
+    "2025-06-02": {
+      "easy": "Bee",
+      "medium": "Hiking",
+      "difficult": "Koala",
+      "impossible": "Menhir"
+    },
+    "2025-06-03": {
+      "easy": "Butterfly",
+      "medium": "Fishing",
+      "difficult": "Wombat",
+      "impossible": "Dolmen"
+    },
+    "2025-06-04": {
+      "easy": "Moth",
+      "medium": "Skiing",
+      "difficult": "Opossum",
+      "impossible": "Henge"
+    },
+    "2025-06-05": {
+      "easy": "Fly",
+      "medium": "Snowboarding",
+      "difficult": "Armadillo",
+      "impossible": "Geoglyph"
+    },
+    "2025-06-06": {
+      "easy": "Mosquito",
+      "medium": "Egypt",
+      "difficult": "Sloth",
+      "impossible": "Nazca Lines"
+    },
+    "2025-06-07": {
+      "easy": "Dragonfly",
+      "medium": "France",
+      "difficult": "Anteater",
+      "impossible": "Moai"
+    },
+    "2025-06-08": {
+      "easy": "Beetle",
+      "medium": "Japan",
+      "difficult": "Lemur",
+      "impossible": "Terracotta Army"
+    },
+    "2025-06-09": {
+      "easy": "Grasshopper",
+      "medium": "Brazil",
+      "difficult": "Meerkat",
+      "impossible": "Machu Picchu"
+    },
+    "2025-06-10": {
+      "easy": "Cricket",
+      "medium": "Australia",
+      "difficult": "Hyena",
+      "impossible": "Angkor Wat"
+    },
+    "2025-06-11": {
+      "easy": "Spider",
+      "medium": "Canada",
+      "difficult": "Giraffe",
+      "impossible": "Borobudur"
+    },
+    "2025-06-12": {
+      "easy": "Scorpion",
+      "medium": "Mexico",
+      "difficult": "Zebra",
+      "impossible": "Timbuktu Manuscripts"
+    },
+    "2025-06-13": {
+      "easy": "Centipede",
+      "medium": "India",
+      "difficult": "Hippopotamus",
+      "impossible": "Great Zimbabwe"
+    },
+    "2025-06-14": {
+      "easy": "Millipede",
+      "medium": "China",
+      "difficult": "Rhinoceros",
+      "impossible": "Cahokia Mounds"
+    },
+    "2025-06-15": {
+      "easy": "Crocodile",
+      "medium": "Russia",
+      "difficult": "Elephant",
+      "impossible": "Chichen Itza"
+    },
+    "2025-06-16": {
+      "easy": "Alligator",
+      "medium": "Italy",
+      "difficult": "Whale",
+      "impossible": "Teotihuacan"
+    },
+    "2025-06-17": {
+      "easy": "Turtle",
+      "medium": "Germany",
+      "difficult": "Dolphin",
+      "impossible": "Gobekli Tepe"
+    },
+    "2025-06-18": {
+      "easy": "Tortoise",
+      "medium": "United Kingdom",
+      "difficult": "Porpoise",
+      "impossible": "Catalhoyuk"
+    },
+    "2025-06-19": {
+      "easy": "Lizard",
+      "medium": "Spain",
+      "difficult": "Seal",
+      "impossible": "Skara Brae"
+    },
+    "2025-06-20": {
+      "easy": "Snake",
+      "medium": "Greece",
+      "difficult": "Walrus",
+      "impossible": "Lascaux Caves"
+    },
+    "2025-06-21": {
+      "easy": "Frog",
+      "medium": "South Africa",
+      "difficult": "Otter",
+      "impossible": "Chauvet Cave"
+    },
+    "2025-06-22": {
+      "easy": "Toad",
+      "medium": "Argentina",
+      "difficult": "Beaver",
+      "impossible": "Altamira Cave"
+    },
+    "2025-06-23": {
+      "easy": "Salamander",
+      "medium": "Nile River",
+      "difficult": "Muskrat",
+      "impossible": "Clovis Point"
+    },
+    "2025-06-24": {
+      "easy": "Newt",
+      "medium": "Amazon River",
+      "difficult": "Capybara",
+      "impossible": "Acheulean Hand Axe"
+    },
+    "2025-06-25": {
+      "easy": "Chicken",
+      "medium": "Mount Everest",
+      "difficult": "Gopher",
+      "impossible": "Oldowan Tools"
+    },
+    "2025-06-26": {
+      "easy": "Duck",
+      "medium": "Sahara Desert",
+      "difficult": "Prairie Dog",
+      "impossible": "Atlatl"
+    },
+    "2025-06-27": {
+      "easy": "Goose",
+      "medium": "Pacific Ocean",
+      "difficult": "Squirrel",
+      "impossible": "Trebuchet"
+    },
+    "2025-06-28": {
+      "easy": "Turkey (bird)",
+      "medium": "Arctic Ocean",
+      "difficult": "Chipmunk",
+      "impossible": "Arbalest"
+    },
+    "2025-06-29": {
+      "easy": "Pig",
+      "medium": "Atlantic Ocean",
+      "difficult": "Marmot",
+      "impossible": "Ballista"
+    },
+    "2025-06-30": {
+      "easy": "Cow",
+      "medium": "Indian Ocean",
+      "difficult": "Rabbit",
+      "impossible": "Greek Fire"
+    },
+    "2025-07-01": {
+      "easy": "Horse",
+      "medium": "Antarctica",
+      "difficult": "Hare",
+      "impossible": "Damascus Steel"
+    },
+    "2025-07-02": {
+      "easy": "Sheep",
+      "medium": "Great Barrier Reef",
+      "difficult": "Pika",
+      "impossible": "Wootz Steel"
+    },
+    "2025-07-03": {
+      "easy": "Goat",
+      "medium": "Grand Canyon",
+      "difficult": "Mouse",
+      "impossible": "Orichalcum"
+    },
+    "2025-07-04": {
+      "easy": "Donkey",
+      "medium": "Eiffel Tower",
+      "difficult": "Rat",
+      "impossible": "Philosopher's Stone"
+    },
+    "2025-07-05": {
+      "easy": "Camel",
+      "medium": "Statue of Liberty",
+      "difficult": "Hamster",
+      "impossible": "Elixir of Life"
+    },
+    "2025-07-06": {
+      "easy": "Llama",
+      "medium": "Taj Mahal",
+      "difficult": "Gerbil",
+      "impossible": "Holy Grail"
+    },
+    "2025-07-07": {
+      "easy": "Alpaca",
+      "medium": "Great Wall of China",
+      "difficult": "Guinea Pig",
+      "impossible": "Ark of the Covenant"
+    },
+    "2025-07-08": {
+      "easy": "Deer",
+      "medium": "Machu Picchu (place)",
+      "difficult": "Chinchilla",
+      "impossible": "Spear of Destiny"
+    },
+    "2025-07-09": {
+      "easy": "Moose",
+      "medium": "Pyramids of Giza",
+      "difficult": "Ferret",
+      "impossible": "Excalibur"
+    },
+    "2025-07-10": {
+      "easy": "Elk",
+      "medium": "Stonehenge",
+      "difficult": "Weasel",
+      "impossible": "Mjolnir"
+    },
+    "2025-07-11": {
+      "easy": "Bear",
+      "medium": "Colosseum (place)",
+      "difficult": "Stoat",
+      "impossible": "Aegis"
+    },
+    "2025-07-12": {
+      "easy": "Wolf",
+      "medium": "Acropolis",
+      "difficult": "Mink",
+      "impossible": "Caduceus"
+    },
+    "2025-07-13": {
+      "easy": "Fox",
+      "medium": "Angkor Wat (place)",
+      "difficult": "Badger",
+      "impossible": "Thyrsus"
+    },
+    "2025-07-14": {
+      "easy": "Raccoon",
+      "medium": "Saint Peter's Basilica",
+      "difficult": "Skunk",
+      "impossible": "Cornucopia"
+    },
+    "2025-07-15": {
+      "easy": "Panda",
+      "medium": "Buckingham Palace",
+      "difficult": "Panda (Red)",
+      "impossible": "Ambrosia"
+    },
+    "2025-07-16": {
+      "easy": "Tiger",
+      "medium": "Hollywood Sign",
+      "difficult": "Wolf (Maned)",
+      "impossible": "Nectar"
+    },
+    "2025-07-17": {
+      "easy": "Lion",
+      "medium": "Golden Gate Bridge",
+      "difficult": "Fox (Arctic)",
+      "impossible": "Soma"
+    },
+    "2025-07-18": {
+      "easy": "Leopard",
+      "medium": "Mount Rushmore",
+      "difficult": "Coyote",
+      "impossible": "Haoma"
+    },
+    "2025-07-19": {
+      "easy": "Jaguar",
+      "medium": "Christ the Redeemer",
+      "difficult": "Jackal",
+      "impossible": "Mana"
+    },
+    "2025-07-20": {
+      "easy": "Cheetah",
+      "medium": "Neuschwanstein Castle",
+      "difficult": "Dingo",
+      "impossible": "Prana"
+    },
+    "2025-07-21": {
+      "easy": "Puma",
+      "medium": "Forbidden City",
+      "difficult": "Lion (Mountain)",
+      "impossible": "Qi (Chi)"
+    },
+    "2025-07-22": {
+      "easy": "Lynx",
+      "medium": "Burj Khalifa",
+      "difficult": "Tiger (Siberian)",
+      "impossible": "Chakra"
+    },
+    "2025-07-23": {
+      "easy": "Bobcat",
+      "medium": "Opera House (Sydney)",
+      "difficult": "Leopard (Snow)",
+      "impossible": "Aura"
+    },
+    "2025-07-24": {
+      "easy": "Ocelot",
+      "medium": "Notre Dame Cathedral",
+      "difficult": "Jaguarundi",
+      "impossible": "Ley Line"
+    },
+    "2025-07-25": {
+      "easy": "Bat",
+      "medium": "Pompeii",
+      "difficult": "Clouded Leopard",
+      "impossible": "Dowsing Rod"
+    },
+    "2025-07-26": {
+      "easy": "Monkey",
+      "medium": "Versailles",
+      "difficult": "Caracal",
+      "impossible": "Ouija Board"
+    },
+    "2025-07-27": {
+      "easy": "Gorilla",
+      "medium": "Alhambra",
+      "difficult": "Serval",
+      "impossible": "Tarot Cards"
+    },
+    "2025-07-28": {
+      "easy": "Chimpanzee",
+      "medium": "Louvre Museum",
+      "difficult": "Fishing Cat",
+      "impossible": "Crystal Ball"
+    },
+    "2025-07-29": {
+      "easy": "Orangutan",
+      "medium": "British Museum",
+      "difficult": "Sand Cat",
+      "impossible": "Scrying Mirror"
+    },
+    "2025-07-30": {
+      "easy": "Gibbon",
+      "medium": "Metropolitan Museum of Art",
+      "difficult": "Pallas's Cat",
+      "impossible": "Alchemy"
+    },
+    "2025-07-31": {
+      "easy": "Whale",
+      "medium": "Uffizi Gallery",
+      "difficult": "Black-footed Cat",
+      "impossible": "Astrology"
+    },
+    "2025-08-01": {
+      "easy": "Dolphin",
+      "medium": "Prado Museum",
+      "difficult": "Kodkod",
+      "impossible": "Numerology"
+    },
+    "2025-08-02": {
+      "easy": "Shark",
+      "medium": "Hermitage Museum",
+      "difficult": "Andean Mountain Cat",
+      "impossible": "Palmistry"
+    },
+    "2025-08-03": {
+      "easy": "Seal",
+      "medium": "Rijksmuseum",
+      "difficult": "Bay Cat",
+      "impossible": "Phrenology"
+    },
+    "2025-08-04": {
+      "easy": "Walrus",
+      "medium": "Vatican Museums",
+      "difficult": "Flat-headed Cat",
+      "impossible": "Physiognomy"
+    },
+    "2025-08-05": {
+      "easy": "Otter",
+      "medium": "Smithsonian Institution",
+      "difficult": "Marbled Cat",
+      "impossible": "Chiromancy"
+    },
+    "2025-08-06": {
+      "easy": "Beaver",
+      "medium": "National Gallery (London)",
+      "difficult": "Leopard Cat",
+      "impossible": "Necromancy"
+    },
+    "2025-08-07": {
+      "easy": "Squirrel",
+      "medium": "Musee d'Orsay",
+      "difficult": "Rusty-spotted Cat",
+      "impossible": "Divination"
+    },
+    "2025-08-08": {
+      "easy": "Rabbit",
+      "medium": "Guggenheim Museum (Bilbao)",
+      "difficult": "Iberian Lynx",
+      "impossible": "Augury"
+    },
+    "2025-08-09": {
+      "easy": "Mouse",
+      "medium": "Topkapi Palace",
+      "difficult": "Eurasian Lynx",
+      "impossible": "Haruspex"
+    },
+    "2025-08-10": {
+      "easy": "Rat",
+      "medium": "Winter Palace",
+      "difficult": "Canada Lynx",
+      "impossible": "Oracle of Delphi"
+    },
+    "2025-08-11": {
+      "easy": "Hamster",
+      "medium": "Kremlin",
+      "difficult": "Bobcat (duplicate)",
+      "impossible": "Sibylline Books"
+    },
+    "2025-08-12": {
+      "easy": "Elephant",
+      "medium": "Tower of London",
+      "difficult": "African Golden Cat",
+      "impossible": "Zoroastrianism"
+    },
+    "2025-08-13": {
+      "easy": "Giraffe",
+      "medium": "Windsor Castle",
+      "difficult": "Asian Golden Cat",
+      "impossible": "Manichaeism"
+    },
+    "2025-08-14": {
+      "easy": "Zebra",
+      "medium": "Edinburgh Castle",
+      "difficult": "Chimpanzee (duplicate)",
+      "impossible": "Gnosticism"
+    },
+    "2025-08-15": {
+      "easy": "Hippo",
+      "medium": "Himeji Castle",
+      "difficult": "Gorilla (duplicate)",
+      "impossible": "Mithraism"
+    },
+    "2025-08-16": {
+      "easy": "Rhino",
+      "medium": "Mont Saint-Michel",
+      "difficult": "Orangutan (duplicate)",
+      "impossible": "Druidism"
+    },
+    "2025-08-17": {
+      "easy": "Kangaroo",
+      "medium": "Chateau de Chambord",
+      "difficult": "Gibbon (duplicate)",
+      "impossible": "Shamanism"
+    },
+    "2025-08-18": {
+      "easy": "Koala",
+      "medium": "Potala Palace",
+      "difficult": "Baboon",
+      "impossible": "Animism"
+    },
+    "2025-08-19": {
+      "easy": "Platypus",
+      "medium": "Red Square",
+      "difficult": "Mandrill",
+      "impossible": "Totemism"
+    },
+    "2025-08-20": {
+      "easy": "Penguin",
+      "medium": "Times Square",
+      "difficult": "Macaque",
+      "impossible": "Vodou"
+    },
+    "2025-08-21": {
+      "easy": "Ostrich",
+      "medium": "Trafalgar Square",
+      "difficult": "Colobus Monkey",
+      "impossible": "Santería"
+    },
+    "2025-08-22": {
+      "easy": "Emu",
+      "medium": "Tiananmen Square",
+      "difficult": "Proboscis Monkey",
+      "impossible": "Candomblé"
+    },
+    "2025-08-23": {
+      "easy": "Eagle",
+      "medium": "Central Park",
+      "difficult": "Howler Monkey",
+      "impossible": "Scientology"
+    },
+    "2025-08-24": {
+      "easy": "Owl",
+      "medium": "Hyde Park",
+      "difficult": "Spider Monkey",
+      "impossible": "Raëlism"
+    },
+    "2025-08-25": {
+      "easy": "Hawk",
+      "medium": "Yellowstone National Park",
+      "difficult": "Capuchin Monkey",
+      "impossible": "Cargo Cult"
+    },
+    "2025-08-26": {
+      "easy": "Falcon",
+      "medium": "Yosemite National Park",
+      "difficult": "Squirrel Monkey",
+      "impossible": "Flying Spaghetti Monster"
+    },
+    "2025-08-27": {
+      "easy": "Vulture",
+      "medium": "Serengeti National Park",
+      "difficult": "Marmoset",
+      "impossible": "Jedism"
+    },
+    "2025-08-28": {
+      "easy": "Swan",
+      "medium": "Galapagos Islands",
+      "difficult": "Tamarin",
+      "impossible": "Discordianism"
+    },
+    "2025-08-29": {
+      "easy": "Pelican",
+      "medium": "Bora Bora",
+      "difficult": "Loris",
+      "impossible": "Epicureanism"
+    },
+    "2025-08-30": {
+      "easy": "Flamingo",
+      "medium": "Maldives",
+      "difficult": "Potto",
+      "impossible": "Cynicism"
+    },
+    "2025-08-31": {
+      "easy": "Parrot",
+      "medium": "Fiji",
+      "difficult": "Galago (Bushbaby)",
+      "impossible": "Skepticism"
+    },
+    "2025-09-01": {
+      "easy": "Dove",
+      "medium": "Santorini",
+      "difficult": "Tarsier",
+      "impossible": "Sophism"
+    },
+    "2025-09-02": {
+      "easy": "Pigeon",
+      "medium": "Capri",
+      "difficult": "Indri",
+      "impossible": "Neoplatonism"
+    },
+    "2025-09-03": {
+      "easy": "Crow",
+      "medium": "Ibiza",
+      "difficult": "Sifaka",
+      "impossible": "Scholasticism"
+    },
+    "2025-09-04": {
+      "easy": "Raven",
+      "medium": "Hawaii",
+      "difficult": "Woolly Monkey",
+      "impossible": "Humanism"
+    },
+    "2025-09-05": {
+      "easy": "Sparrow",
+      "medium": "Bali",
+      "difficult": "Uakari",
+      "impossible": "Rationalism"
+    },
+    "2025-09-06": {
+      "easy": "Robin",
+      "medium": "Paris",
+      "difficult": "Saki Monkey",
+      "impossible": "Empiricism"
+    },
+    "2025-09-07": {
+      "easy": "Blue Jay",
+      "medium": "London",
+      "difficult": "Titi Monkey",
+      "impossible": "Idealism"
+    },
+    "2025-09-08": {
+      "easy": "Cardinal (bird)",
+      "medium": "Rome",
+      "difficult": "Guenon",
+      "impossible": "Materialism"
+    },
+    "2025-09-09": {
+      "easy": "Hummingbird",
+      "medium": "Tokyo",
+      "difficult": "Langur",
+      "impossible": "Monism"
+    },
+    "2025-09-10": {
+      "easy": "Woodpecker",
+      "medium": "New York City",
+      "difficult": "Mangabey",
+      "impossible": "Dualism"
+    },
+    "2025-09-11": {
+      "easy": "Kingfisher",
+      "medium": "Cairo",
+      "difficult": "Patas Monkey",
+      "impossible": "Nihilism"
+    },
+    "2025-09-12": {
+      "easy": "Toucan",
+      "medium": "Moscow",
+      "difficult": "Vervet Monkey",
+      "impossible": "Absurdism"
+    },
+    "2025-09-13": {
+      "easy": "Goldfish",
+      "medium": "Sydney",
+      "difficult": "Gelada",
+      "impossible": "Postmodernism"
+    },
+    "2025-09-14": {
+      "easy": "Guppy",
+      "medium": "Rio de Janeiro",
+      "difficult": "Drill (primate)",
+      "impossible": "Structuralism"
+    },
+    "2025-09-15": {
+      "easy": "Salmon",
+      "medium": "Berlin",
+      "difficult": "Bonobo",
+      "impossible": "Post-structuralism"
+    },
+    "2025-09-16": {
+      "easy": "Tuna",
+      "medium": "Beijing",
+      "difficult": "Siamang",
+      "impossible": "Deconstruction"
+    },
+    "2025-09-17": {
+      "easy": "Trout",
+      "medium": "Amsterdam",
+      "difficult": "Hoopoe",
+      "impossible": "Phenomenology"
+    },
+    "2025-09-18": {
+      "easy": "Cod",
+      "medium": "Prague",
+      "difficult": "Kookaburra",
+      "impossible": "Hermeneutics"
+    },
+    "2025-09-19": {
+      "easy": "Sardine",
+      "medium": "Vienna",
+      "difficult": "Lyrebird",
+      "impossible": "Critical Theory"
+    },
+    "2025-09-20": {
+      "easy": "Anchovy",
+      "medium": "Budapest",
+      "difficult": "Cassowary",
+      "impossible": "Gaia Hypothesis"
+    },
+    "2025-09-21": {
+      "easy": "Eel",
+      "medium": "Florence",
+      "difficult": "Kiwi (bird)",
+      "impossible": "Panspermia"
+    },
+    "2025-09-22": {
+      "easy": "Stingray",
+      "medium": "Venice",
+      "difficult": "Secretarybird",
+      "impossible": "Anthropic Principle"
+    },
+    "2025-09-23": {
+      "easy": "Octopus",
+      "medium": "Dublin",
+      "difficult": "Roadrunner",
+      "impossible": "Fermi Paradox"
+    },
+    "2025-09-24": {
+      "easy": "Squid",
+      "medium": "Bangkok",
+      "difficult": "Potoo",
+      "impossible": "Great Filter"
+    },
+    "2025-09-25": {
+      "easy": "Cuttlefish",
+      "medium": "Singapore",
+      "difficult": "Oilbird",
+      "impossible": "Simulation Hypothesis"
+    },
+    "2025-09-26": {
+      "easy": "Nautilus",
+      "medium": "Hong Kong",
+      "difficult": "Takahe",
+      "impossible": "Boltzmann Brain"
+    },
+    "2025-09-27": {
+      "easy": "Sand",
+      "medium": "Seoul",
+      "difficult": "Moa (extinct)",
+      "impossible": "Omega Point"
+    },
+    "2025-09-28": {
+      "easy": "Rock",
+      "medium": "Dubai",
+      "difficult": "Dodo (extinct)",
+      "impossible": "Technological Singularity"
+    },
+    "2025-09-29": {
+      "easy": "Stone",
+      "medium": "Istanbul",
+      "difficult": "Great Auk (extinct)",
+      "impossible": "Grey Goo"
+    },
+    "2025-09-30": {
+      "easy": "Pebble",
+      "medium": "Jerusalem",
+      "difficult": "Passenger Pigeon (extinct)",
+      "impossible": "Von Neumann Probe"
+    },
+    "2025-10-01": {
+      "easy": "Boulder",
+      "medium": "Mecca",
+      "difficult": "Thylacine (extinct)",
+      "impossible": "Dyson Sphere"
+    },
+    "2025-10-02": {
+      "easy": "Mountain",
+      "medium": "Mumbai",
+      "difficult": "Quagga (extinct)",
+      "impossible": "Kardashev Scale"
+    },
+    "2025-10-03": {
+      "easy": "Hill",
+      "medium": "Buenos Aires",
+      "difficult": "Steller's Sea Cow (extinct)",
+      "impossible": "Terraforming"
+    },
+    "2025-10-04": {
+      "easy": "Valley",
+      "medium": "Mexico City",
+      "difficult": "Woolly Mammoth (extinct)",
+      "impossible": "Exoplanet"
+    },
+    "2025-10-05": {
+      "easy": "Cave",
+      "medium": "Lima",
+      "difficult": "Mastodon (extinct)",
+      "impossible": "Habitable Zone"
+    },
+    "2025-10-06": {
+      "easy": "Canyon",
+      "medium": "Bogota",
+      "difficult": "Sabre-Toothed Cat (extinct)",
+      "impossible": "Biosignature"
+    },
+    "2025-10-07": {
+      "easy": "Cliff",
+      "medium": "Santiago",
+      "difficult": "Megalodon (extinct)",
+      "impossible": "SETI"
+    },
+    "2025-10-08": {
+      "easy": "Beach",
+      "medium": "Havana",
+      "difficult": "Arthropleura (extinct)",
+      "impossible": "Wow! Signal"
+    },
+    "2025-10-09": {
+      "easy": "Desert",
+      "medium": "Kingston",
+      "difficult": "Meganeura (extinct)",
+      "impossible": "Kuiper Belt"
+    },
+    "2025-10-10": {
+      "easy": "Forest",
+      "medium": "Nairobi",
+      "difficult": "Hallucigenia (extinct)",
+      "impossible": "Oort Cloud"
+    },
+    "2025-10-11": {
+      "easy": "Jungle",
+      "medium": "Lagos",
+      "difficult": "Anomalocaris (extinct)",
+      "impossible": "Heliopause"
+    },
+    "2025-10-12": {
+      "easy": "Swamp",
+      "medium": "Accra",
+      "difficult": "Opabinia (extinct)",
+      "impossible": "Bow Shock (heliosphere)"
+    },
+    "2025-10-13": {
+      "easy": "Marsh",
+      "medium": "Johannesburg",
+      "difficult": "Wiwaxia (extinct)",
+      "impossible": "Interstellar Medium"
+    },
+    "2025-10-14": {
+      "easy": "Tundra",
+      "medium": "Cape Town",
+      "difficult": "Pikaia (extinct)",
+      "impossible": "Local Bubble"
+    },
+    "2025-10-15": {
+      "easy": "Island",
+      "medium": "Warsaw",
+      "difficult": "Haikouichthys (extinct)",
+      "impossible": "Galactic Habitable Zone"
+    },
+    "2025-10-16": {
+      "easy": "Ocean",
+      "medium": "Kiev",
+      "difficult": "Dunkleosteus (extinct)",
+      "impossible": "Lagrange Point"
+    },
+    "2025-10-17": {
+      "easy": "Sea",
+      "medium": "Bucharest",
+      "difficult": "Tiktaalik (extinct)",
+      "impossible": "Roche Limit"
+    },
+    "2025-10-18": {
+      "easy": "Lake",
+      "medium": "Helsinki",
+      "difficult": "Archaeopteryx (extinct)",
+      "impossible": "Event Horizon"
+    },
+    "2025-10-19": {
+      "easy": "River",
+      "medium": "Stockholm",
+      "difficult": "Hesperornis (extinct)",
+      "impossible": "Singularity (gravitational)"
+    },
+    "2025-10-20": {
+      "easy": "Stream",
+      "medium": "Oslo",
+      "difficult": "Ichthyornis (extinct)",
+      "impossible": "Ergosphere"
+    },
+    "2025-10-21": {
+      "easy": "Pond",
+      "medium": "Copenhagen",
+      "difficult": "Enantiornithes (extinct group)",
+      "impossible": "Accretion Disk"
+    },
+    "2025-10-22": {
+      "easy": "Waterfall",
+      "medium": "Brussels",
+      "difficult": "Australopithecus",
+      "impossible": "Relativistic Jet"
+    },
+    "2025-10-23": {
+      "easy": "Geyser",
+      "medium": "Lisbon",
+      "difficult": "Homo Habilis",
+      "impossible": "Gravitational Lensing"
+    },
+    "2025-10-24": {
+      "easy": "Glacier",
+      "medium": "Madrid",
+      "difficult": "Homo Erectus",
+      "impossible": "Gravitational Wave"
+    },
+    "2025-10-25": {
+      "easy": "Iceberg",
+      "medium": "Athens",
+      "difficult": "Neanderthal",
+      "impossible": "Frame-Dragging"
+    },
+    "2025-10-26": {
+      "easy": "Volcano",
+      "medium": "Ankara",
+      "difficult": "Denisovan",
+      "impossible": "Penrose Process"
+    },
+    "2025-10-27": {
+      "easy": "Earthquake",
+      "medium": "Manila",
+      "difficult": "Homo Floresiensis",
+      "impossible": "Hawking Radiation"
+    },
+    "2025-10-28": {
+      "easy": "Tornado",
+      "medium": "Jakarta",
+      "difficult": "Homo Naledi",
+      "impossible": "Information Paradox"
+    },
+    "2025-10-29": {
+      "easy": "Hurricane",
+      "medium": "Kuala Lumpur",
+      "difficult": "La Brea Tar Pits",
+      "impossible": "Holographic Principle"
+    },
+    "2025-10-30": {
+      "easy": "Flood",
+      "medium": "Hanoi",
+      "difficult": "Burgess Shale",
+      "impossible": "Planck Length"
+    },
+    "2025-10-31": {
+      "easy": "Drought",
+      "medium": "Canberra",
+      "difficult": "Solnhofen Plattenkalk",
+      "impossible": "Planck Time"
+    },
+    "2025-11-01": {
+      "easy": "Famine",
+      "medium": "Wellington",
+      "difficult": "Jehol Biota",
+      "impossible": "Quantum Foam"
+    },
+    "2025-11-02": {
+      "easy": "Wind",
+      "medium": "Ottawa",
+      "difficult": "Morrison Formation",
+      "impossible": "Zero-Point Energy"
+    },
+    "2025-11-03": {
+      "easy": "Storm",
+      "medium": "Washington D.C.",
+      "difficult": "Hell Creek Formation",
+      "impossible": "Casimir Effect"
+    },
+    "2025-11-04": {
+      "easy": "Lightning",
+      "medium": "Brasilia",
+      "difficult": "Olduvai Gorge",
+      "impossible": "Vacuum Catastrophe"
+    },
+    "2025-11-05": {
+      "easy": "Thunder",
+      "medium": "Bern",
+      "difficult": "Hadar Formation",
+      "impossible": "Fine-Tuning Problem"
+    },
+    "2025-11-06": {
+      "easy": "Rainbow",
+      "medium": "Vienna (duplicate)",
+      "difficult": "Sterkfontein Caves",
+      "impossible": "Multiverse"
+    },
+    "2025-11-07": {
+      "easy": "Fog",
+      "medium": "Monaco",
+      "difficult": "Vindija Cave",
+      "impossible": "Anthrax"
+    },
+    "2025-11-08": {
+      "easy": "Mist",
+      "medium": "San Marino",
+      "difficult": "Denisova Cave",
+      "impossible": "Ebola"
+    },
+    "2025-11-09": {
+      "easy": "Hail",
+      "medium": "Vatican City",
+      "difficult": "Shanidar Cave",
+      "impossible": "Marburg Virus"
+    },
+    "2025-11-10": {
+      "easy": "Sleet",
+      "medium": "Andorra la Vella",
+      "difficult": "Cro-Magnon",
+      "impossible": "Prion"
+    },
+    "2025-11-11": {
+      "easy": "Frost",
+      "medium": "Luxembourg City",
+      "difficult": "Venus Figurines",
+      "impossible": "Kuru Disease"
+    },
+    "2025-11-12": {
+      "easy": "Dew",
+      "medium": "Valletta",
+      "difficult": "Ishango Bone",
+      "impossible": "Fatal Familial Insomnia"
+    },
+    "2025-11-13": {
+      "easy": "Steam",
+      "medium": "Reykjavik",
+      "difficult": "Lebombo Bone",
+      "impossible": "Fibrodysplasia Ossificans Progressiva"
+    },
+    "2025-11-14": {
+      "easy": "Smoke",
+      "medium": "Nicosia",
+      "difficult": "Blombos Cave Ochre",
+      "impossible": "Progeria"
+    },
+    "2025-11-15": {
+      "easy": "Ash",
+      "medium": "Astana",
+      "difficult": "Tsodilo Hills",
+      "impossible": "Harlequin Ichthyosis"
+    },
+    "2025-11-16": {
+      "easy": "Dust",
+      "medium": "Tashkent",
+      "difficult": "Ubirr Rock Art",
+      "impossible": "Cotard Delusion"
+    },
+    "2025-11-17": {
+      "easy": "Mud",
+      "medium": "Bishkek",
+      "difficult": "Bradshaw Paintings (Gwion Gwion)",
+      "impossible": "Capgras Delusion"
+    },
+    "2025-11-18": {
+      "easy": "Clay",
+      "medium": "Dushanbe",
+      "difficult": "Nazca Booby",
+      "impossible": "Fregoli Delusion"
+    },
+    "2025-11-19": {
+      "easy": "Dirt",
+      "medium": "Ashgabat",
+      "difficult": "Blue-Footed Booby",
+      "impossible": "Exploding Head Syndrome"
+    },
+    "2025-11-20": {
+      "easy": "Soil",
+      "medium": "Thimphu",
+      "difficult": "Frigatebird",
+      "impossible": "Alien Hand Syndrome"
+    },
+    "2025-11-21": {
+      "easy": "Pollen",
+      "medium": "Kathmandu",
+      "difficult": "Albatross",
+      "impossible": "Foreign Accent Syndrome"
+    },
+    "2025-11-22": {
+      "easy": "Spore",
+      "medium": "Dhaka",
+      "difficult": "Petrel",
+      "impossible": "Kleine-Levin Syndrome"
+    },
+    "2025-11-23": {
+      "easy": "Diamond",
+      "medium": "Colombo",
+      "difficult": "Shearwater",
+      "impossible": "Stendhal Syndrome"
+    },
+    "2025-11-24": {
+      "easy": "Gold",
+      "medium": "Male (city)",
+      "difficult": "Puffin",
+      "impossible": "Jerusalem Syndrome"
+    },
+    "2025-11-25": {
+      "easy": "Silver",
+      "medium": "Port Louis",
+      "difficult": "Auk",
+      "impossible": "Paris Syndrome"
+    },
+    "2025-11-26": {
+      "easy": "Copper",
+      "medium": "Victoria (Seychelles)",
+      "difficult": "Guillemot",
+      "impossible": "Tourette Syndrome"
+    },
+    "2025-11-27": {
+      "easy": "Iron",
+      "medium": "Antananarivo",
+      "difficult": "Razorbill",
+      "impossible": "Savant Syndrome"
+    },
+    "2025-11-28": {
+      "easy": "Steel",
+      "medium": "Maputo",
+      "difficult": "Murre",
+      "impossible": "Aphantasia"
+    },
+    "2025-11-29": {
+      "easy": "Bronze",
+      "medium": "Luanda",
+      "difficult": "Gannet",
+      "impossible": "Hyperthymesia"
+    },
+    "2025-11-30": {
+      "easy": "Aluminum",
+      "medium": "Kinshasa",
+      "difficult": "Cormorant",
+      "impossible": "Fugue State"
+    },
+    "2025-12-01": {
+      "easy": "Lead",
+      "medium": "Brazzaville",
+      "difficult": "Spoonbill",
+      "impossible": "Dissociative Identity Disorder"
+    },
+    "2025-12-02": {
+      "easy": "Tin",
+      "medium": "Libreville",
+      "difficult": "Ibis",
+      "impossible": "Munchausen Syndrome"
+    },
+    "2025-12-03": {
+      "easy": "Nickel",
+      "medium": "Yaounde",
+      "difficult": "Stork",
+      "impossible": "Munchausen Syndrome by Proxy"
+    },
+    "2025-12-04": {
+      "easy": "Zinc",
+      "medium": "Abuja",
+      "difficult": "Heron",
+      "impossible": "Phantom Limb"
+    },
+    "2025-12-05": {
+      "easy": "Mercury (metal)",
+      "medium": "N'Djamena",
+      "difficult": "Egret",
+      "impossible": "Blindsight"
+    },
+    "2025-12-06": {
+      "easy": "Platinum",
+      "medium": "Niamey",
+      "difficult": "Bittern",
+      "impossible": "Hemispatial Neglect"
+    },
+    "2025-12-07": {
+      "easy": "Titanium",
+      "medium": "Ouagadougou",
+      "difficult": "Crane (bird)",
+      "impossible": "Agnosia"
+    },
+    "2025-12-08": {
+      "easy": "Uranium",
+      "medium": "Bamako",
+      "difficult": "Rail (bird)",
+      "impossible": "Aphasia"
+    },
+    "2025-12-09": {
+      "easy": "Plutonium",
+      "medium": "Conakry",
+      "difficult": "Coot",
+      "impossible": "Alexia"
+    },
+    "2025-12-10": {
+      "easy": "Glass",
+      "medium": "Freetown",
+      "difficult": "Gallinule",
+      "impossible": "Agraphia"
+    },
+    "2025-12-11": {
+      "easy": "Plastic",
+      "medium": "Monrovia",
+      "difficult": "Jacana",
+      "impossible": "Apraxia"
+    },
+    "2025-12-12": {
+      "easy": "Rubber",
+      "medium": "Bissau",
+      "difficult": "Oystercatcher",
+      "impossible": "Ataxia"
+    },
+    "2025-12-13": {
+      "easy": "Wood",
+      "medium": "Praia",
+      "difficult": "Plover",
+      "impossible": "Dyslexia"
+    },
+    "2025-12-14": {
+      "easy": "Paper",
+      "medium": "Dakar",
+      "difficult": "Lapwing",
+      "impossible": "Dyscalculia"
+    },
+    "2025-12-15": {
+      "easy": "Cardboard",
+      "medium": "Nouakchott",
+      "difficult": "Sandpiper",
+      "impossible": "Syncope"
+    },
+    "2025-12-16": {
+      "easy": "Ceramic",
+      "medium": "Rabat",
+      "difficult": "Curlew",
+      "impossible": "Narcolepsy"
+    },
+    "2025-12-17": {
+      "easy": "Porcelain",
+      "medium": "Algiers",
+      "difficult": "Godwit",
+      "impossible": "Cataplexy"
+    },
+    "2025-12-18": {
+      "easy": "Concrete",
+      "medium": "Tunis",
+      "difficult": "Dunlin",
+      "impossible": "REM Sleep Behavior Disorder"
+    },
+    "2025-12-19": {
+      "easy": "Brick",
+      "medium": "Tripoli",
+      "difficult": "Sanderling",
+      "impossible": "Sleep Paralysis"
+    },
+    "2025-12-20": {
+      "easy": "Cement",
+      "medium": "Cairo (duplicate)",
+      "difficult": "Phalarope",
+      "impossible": "Bruxism"
+    },
+    "2025-12-21": {
+      "easy": "Asphalt",
+      "medium": "Khartoum",
+      "difficult": "Skua",
+      "impossible": "Tinnitus"
+    },
+    "2025-12-22": {
+      "easy": "Wax",
+      "medium": "Juba",
+      "difficult": "Jaeger",
+      "impossible": "Vertigo"
+    },
+    "2025-12-23": {
+      "easy": "Ice",
+      "medium": "Addis Ababa",
+      "difficult": "Gull",
+      "impossible": "Migraine"
+    },
+    "2025-12-24": {
+      "easy": "Snowflake",
+      "medium": "Asmara",
+      "difficult": "Tern",
+      "impossible": "Cluster Headache"
+    },
+    "2025-12-25": {
+      "easy": "Gift",
+      "medium": "Djibouti (city)",
+      "difficult": "Skimmer",
+      "impossible": "Neuralgia"
+    },
+    "2025-12-26": {
+      "easy": "Toy",
+      "medium": "Mogadishu",
+      "difficult": "Macaw",
+      "impossible": "Sciatica"
+    },
+    "2025-12-27": {
+      "easy": "Doll",
+      "medium": "Sana'a",
+      "difficult": "Cockatoo",
+      "impossible": "Carpal Tunnel Syndrome"
+    },
+    "2025-12-28": {
+      "easy": "Puzzle",
+      "medium": "Muscat",
+      "difficult": "Lorikeet",
+      "impossible": "Gout"
+    },
+    "2025-12-29": {
+      "easy": "Balloon",
+      "medium": "Abu Dhabi",
+      "difficult": "Parakeet",
+      "impossible": "Lupus"
+    },
+    "2025-12-30": {
+      "easy": "Kite",
+      "medium": "Doha",
+      "difficult": "Budgerigar",
+      "impossible": "Scleroderma"
+    },
+    "2025-12-31": {
+      "easy": "Party",
+      "medium": "Manama",
+      "difficult": "Lovebird",
+      "impossible": "Pfeilstorch"
+    }
+  }
