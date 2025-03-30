@@ -214,6 +214,15 @@ document.addEventListener('DOMContentLoaded', () => { // Ensure DOM is loaded
       }
   });
 
+  questionInput.addEventListener('focus', () => {
+      setTimeout(() => {
+          // Ensure chat element exists and scrollHeight is accessible
+          if (chat) {
+             chat.scrollTop = chat.scrollHeight;
+          }
+      }, 150); // Increased delay slightly for potentially slower mobile rendering
+  });
+
   // Score Submission
   submitScoreButton.addEventListener('click', async () => {
       // Ensure game is over and results are available
