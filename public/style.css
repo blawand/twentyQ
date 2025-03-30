@@ -5,36 +5,38 @@
 }
 
 html, body {
+  /* CRITICAL: Use 100% height instead of relying on default or vh */
   height: 100%;
+  /* CRITICAL: Prevent body scrolling, scrolling happens inside chat-messages */
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  /* New Background: Subtle geometric pattern or texture */
-  background-color: #f0f2f5; /* Fallback color */
-  /* Example pattern (SVG): Replace with your preferred pattern or gradient */
+  background-color: #f0f2f5; /* Keep your background */
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d5d8de' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   font-size: 16px;
   color: #333;
-  line-height: 1.5; /* Added default line-height */
+  line-height: 1.5;
 }
 
 /* Chat Container */
 .chat-container {
-  width: 100%; /* Take full width */
-  max-width: 760px; /* Slightly wider max-width */
-  height: 100vh;
-  margin: 0 auto; /* Center the container */
+  width: 100%;
+  max-width: 760px;
+  /* CRITICAL: Fill the body height */
+  height: 100%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff; /* Pure white background */
-  /* Removed distinct shadow, relies on body background contrast */
-  /* Add subtle border */
+  background-color: #ffffff;
   border-left: 1px solid #e8e8e8;
   border-right: 1px solid #e8e8e8;
-  overflow: hidden; /* Keeps content contained */
+  /* CRITICAL: Ensure container itself doesn't scroll */
+  overflow: hidden;
 }
 
 /* Header */
 .chat-header {
-  /* Updated Gradient: Softer, more cohesive */
+  /* CRITICAL: Prevent header from shrinking */
+  flex-shrink: 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   padding: 1rem 1.5rem;
@@ -42,10 +44,11 @@ html, body {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.75rem; /* Slightly increased gap */
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Subtle separator */
+  gap: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
+/* ... (rest of .chat-header styles, .title, .header-right, .mode-selection, etc. remain the same) ... */
 .title {
   font-size: 1.5rem; /* Slightly smaller */
   font-weight: 600;
@@ -107,16 +110,21 @@ html, body {
   font-weight: 500;
 }
 
+
 /* Chat Messages Area */
 .chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1.5rem 1.5rem 1rem 1.5rem; /* Adjusted padding */
-  background-color: #f9f9fb; /* Very light grey background */
+  /* CRITICAL: Take remaining space and allow scrolling */
+  flex: 1 1 auto; /* Allow growing and shrinking, auto basis */
+  overflow-y: auto; /* Enable vertical scrolling ONLY here */
+  /* CRITICAL: Prevents flexbox overflow issue on some browsers */
+  min-height: 0;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  background-color: #f9f9fb;
   display: flex;
   flex-direction: column;
 }
 
+/* ... (rest of .message styles remain the same) ... */
 /* Individual Messages */
 .message {
   max-width: 80%;
@@ -180,11 +188,14 @@ html, body {
 
 /* Chat Input Area */
 .chat-input {
+  /* CRITICAL: Prevent footer from shrinking */
+  flex-shrink: 0;
   padding: 1rem 1.5rem;
-  background-color: #ffffff; /* White input area */
-  border-top: 1px solid #e8e8e8; /* Match container border */
+  background-color: #ffffff;
+  border-top: 1px solid #e8e8e8;
 }
 
+/* ... (rest of #question-form, #question-input, button styles remain the same) ... */
 #question-form {
   display: flex;
   width: 100%;
@@ -237,13 +248,20 @@ html, body {
   transform: none; /* No hover/active effect when disabled */
 }
 
-/* Post Game Section (Score, Share, Leaderboard) */
+/* Post Game Section needs to be scrollable if content overflows */
 #post-game-section {
+  /* Allow this section itself to scroll if it gets too long on small screens */
+  overflow-y: auto;
+  /* It should be part of the main scroll flow when visible, not fixed height */
+  /* Remove fixed height if any, ensure it's displayed as block */
   padding: 1.5rem;
   background-color: #f9f9fb; /* Match chat background */
   border-top: 1px solid #e8e8e8;
-  display: none;
+  display: none; /* Keep hidden initially */
 }
+
+
+/* ... (rest of #post-game-section styles, score, share, leaderboard remain largely the same) ... */
 
 #post-game-section h2 {
   font-size: 1.3rem; /* Adjusted size */
@@ -312,7 +330,7 @@ html, body {
   border: 1px solid #d8dcf3;
   max-width: 500px;
   text-align: center;
-  display: none;
+  /* display: none; // Handled by JS */
 }
 
 #share-link-container p {
@@ -369,7 +387,7 @@ html, body {
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.07); /* Subtle shadow */
-  overflow: hidden;
+  overflow: hidden; /* Clips content within border-radius */
 }
 
 #leaderboard-table th,
@@ -393,9 +411,6 @@ html, body {
   border-bottom: none;
 }
 
-#leaderboard-table tr:nth-child(even) {
-  background-color: transparent; /* Remove striping for cleaner look */
-}
 #leaderboard-table tr:hover {
     background-color: #f8f9fa; /* Hover effect on rows */
 }
@@ -413,119 +428,91 @@ html, body {
     border-radius: 8px;
 }
 
-/* ------------------- */
-/* Responsive Adjustments */
-/* ------------------- */
+/* Visually Hidden Class (Keep this) */
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
 
-@media (max-width: 768px) { /* Adjusted breakpoint */
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
    .chat-container {
-        border-left: none; /* Remove side borders on mobile */
+        border-left: none;
         border-right: none;
-        max-width: 100%; /* Use full width */
+        max-width: 100%;
    }
 }
 
 @media (max-width: 650px) {
   html {
-     font-size: 15px;
+     font-size: 15px; /* Base size for smaller screens */
   }
 
-  .chat-container {
-    border-radius: 0;
-  }
-
-  .chat-header {
-    padding: 0.8rem 1rem;
-  }
+  /* Reduce padding on key elements */
+  .chat-header { padding: 0.8rem 1rem; }
+  .chat-messages { padding: 1rem; }
+  .chat-input { padding: 0.75rem 1rem; }
 
   .title {
     font-size: 1.4rem;
     text-align: center;
-    width: 100%; /* Ensure title takes full width when wrapped */
-    order: -1; /* Optional: Ensure title stays visually first if wrapped differently */
-    margin-bottom: 0.75rem; /* Add space below title */
+    width: 100%;
+    order: -1; /* Ensure title is visually first */
+    margin-bottom: 0.75rem;
   }
 
   .header-right {
-    width: 100%; /* Container is full width */
-    align-items: stretch; /* Default behavior - items stretch horizontally */
-    flex-direction: column; /* Stack items vertically */
-    gap: 0.75rem; /* Space between stacked items */
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-
-   /* --- Mode Buttons Fix --- */
    .mode-selection {
-     /* Remove previous flex centering */
-     /* justify-content: center; */
-     /* flex-wrap: wrap; */
-
-     /* Use Grid for equal columns */
      display: grid;
      grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-     gap: 0.5rem; /* Space between grid items (buttons) */
-     width: 100%; /* Ensure grid container takes full width */
+     gap: 0.5rem;
+     width: 100%;
    }
 
    .mode-button {
-     padding: 0.5rem 0.25rem; /* Adjust padding for smaller buttons */
+     padding: 0.5rem 0.25rem;
      font-size: 0.75rem;
-     text-align: center; /* Ensure text is centered within the button */
-     white-space: nowrap; /* Prevent text wrapping */
-     overflow: hidden; /* Hide overflow */
-     text-overflow: ellipsis; /* Add ... if text is too long */
-     width: 100%; /* Make button fill its grid cell */
+     text-align: center;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     width: 100%;
    }
-   /* --- End Mode Buttons Fix --- */
 
-
-   /* --- Question Counter Fix --- */
    #question-counter {
-    /* Restore centering and auto width */
-    align-self: center; /* Center the element horizontally */
-    width: auto;       /* Take only the width needed for content */
-    /* Keep text centered within the element */
+    align-self: center;
+    width: auto;
     text-align: center;
-    padding: 0.4rem 0.8rem; /* Maybe slightly more padding */
+    padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
-    /* width: 100%; */ /* Ensure this line is removed or commented out */
-    border-radius: 15px; /* Revert to pill shape or keep 8px */
-  }
-
-  .chat-messages {
-    padding: 1rem;
+    border-radius: 15px;
   }
 
   .message {
     max-width: 90%;
     padding: 0.7rem 1rem;
-    font-size: 0.95rem;
+    font-size: 0.95rem; /* Slightly smaller text in bubbles */
     border-radius: 14px;
   }
 
-  .chat-input {
-    padding: 0.75rem 1rem;
-  }
-
   #question-input {
-    font-size: 1rem;
+    font-size: 1rem; /* Keep input readable */
     padding: 0.7rem 0.9rem;
   }
 
   #question-form button {
-    font-size: 1rem;
-    padding: 0.7rem 1.2rem;
+    font-size: 1rem; /* Keep button text readable */
+    padding: 0.7rem 1rem; /* Slightly less horizontal padding */
   }
 
-  /* Score & Leaderboard responsive tweaks */
-  #post-game-section {
-    padding: 1rem;
-  }
+  #post-game-section { padding: 1rem; }
 
   #score-submission,
-  #share-link-container {
-     max-width: 95%;
-  }
+  #share-link-container { max-width: 95%; }
 
   #leaderboard-table th,
   #leaderboard-table td {
@@ -535,4 +522,4 @@ html, body {
    #leaderboard-table th {
      font-size: 0.7rem;
    }
-} 
+}
