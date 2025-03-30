@@ -5,9 +5,8 @@
 }
 
 html, body {
-  /* CRITICAL: Use 100% height instead of relying on default or vh */
   height: 100%;
-  /* CRITICAL: Prevent body scrolling, scrolling happens inside chat-messages */
+  /* Body doesn't scroll, container manages height */
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: #f0f2f5; /* Keep your background */
@@ -21,7 +20,7 @@ html, body {
 .chat-container {
   width: 100%;
   max-width: 760px;
-  /* CRITICAL: Fill the body height */
+  /* Use 100% of the dynamically adjusted viewport height */
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -29,14 +28,18 @@ html, body {
   background-color: #ffffff;
   border-left: 1px solid #e8e8e8;
   border-right: 1px solid #e8e8e8;
-  /* CRITICAL: Ensure container itself doesn't scroll */
+  /* Container itself should not scroll */
   overflow: hidden;
 }
 
 /* Header */
 .chat-header {
-  /* CRITICAL: Prevent header from shrinking */
-  flex-shrink: 0;
+  /* Make header stick to the top */
+  position: sticky;
+  top: 0;
+  z-index: 10; /* Ensure it's above scrolling content */
+  /* Keep existing styles */
+  flex-shrink: 0; /* Prevent shrinking */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   padding: 1rem 1.5rem;
@@ -48,478 +51,141 @@ html, body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* ... (rest of .chat-header styles, .title, .header-right, .mode-selection, etc. remain the same) ... */
-.title {
-  font-size: 1.5rem; /* Slightly smaller */
-  font-weight: 600;
-  flex-shrink: 0;
-}
-
-.header-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.5rem;
-}
-
-/* Mode Selection */
-.mode-selection {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.mode-button {
-  background-color: rgba(255, 255, 255, 0.15); /* Slightly more visible */
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 0.4rem 0.9rem; /* Adjusted padding */
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .2s ease-in-out;
-  white-space: nowrap;
-}
-
-.mode-button:hover:not(:disabled) {
-  background-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-1px);
-}
-
-.mode-button.active {
-  background-color: #fff;
-  color: #667eea; /* Match new gradient start */
-  font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-
-.mode-button:disabled {
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.5);
-  cursor: not-allowed;
-  transform: none;
-}
-
-/* Question Counter */
-#question-counter {
-  font-size: 0.8rem; /* Slightly smaller */
-  background-color: rgba(0, 0, 0, 0.15); /* Darker for better contrast */
-  padding: 0.3rem 0.7rem;
-  border-radius: 15px;
-  font-weight: 500;
-}
+/* ... (rest of .chat-header inner styles: .title, .header-right, etc. remain the same) ... */
+.title { font-size: 1.5rem; font-weight: 600; flex-shrink: 0; }
+.header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
+.mode-selection { display: flex; gap: 0.5rem; }
+.mode-button { background-color: rgba(255, 255, 255, 0.15); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all .2s ease-in-out; white-space: nowrap; }
+.mode-button:hover:not(:disabled) { background-color: rgba(255, 255, 255, 0.3); transform: translateY(-1px); }
+.mode-button.active { background-color: #fff; color: #667eea; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.mode-button:disabled { background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; transform: none; }
+#question-counter { font-size: 0.8rem; background-color: rgba(0, 0, 0, 0.15); padding: 0.3rem 0.7rem; border-radius: 15px; font-weight: 500; }
 
 
 /* Chat Messages Area */
 .chat-messages {
-  /* CRITICAL: Take remaining space and allow scrolling */
-  flex: 1 1 auto; /* Allow growing and shrinking, auto basis */
-  overflow-y: auto; /* Enable vertical scrolling ONLY here */
-  /* CRITICAL: Prevents flexbox overflow issue on some browsers */
+  /* Takes up all remaining space */
+  flex: 1 1 auto;
+  /* CRITICAL: This is the ONLY vertically scrolling element */
+  overflow-y: auto;
+  /* Recommended for performance on mobile */
+  -webkit-overflow-scrolling: touch;
+  /* Prevent flex item overflow issues */
   min-height: 0;
-  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  padding: 1.5rem 1.5rem 1rem 1.5rem; /* Adjust padding as needed */
   background-color: #f9f9fb;
   display: flex;
+  /* Keep messages top-to-bottom in DOM, scrolling handles view */
   flex-direction: column;
+   /* Add padding at the bottom so content doesn't hide under sticky footer */
+   /* Estimate footer height - adjust if needed */
+   /* padding-bottom: 70px;  <-- Maybe not needed if footer is truly sticky */
 }
 
 /* ... (rest of .message styles remain the same) ... */
-/* Individual Messages */
-.message {
-  max-width: 80%;
-  margin-bottom: 1rem;
-  padding: 0.8rem 1.2rem;
-  /* Slightly less rounded */
-  border-radius: 16px;
-  line-height: 1.5;
-  word-wrap: break-word;
-  position: relative;
-   /* Softer shadow on messages */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-.message.computer {
-  align-self: flex-start;
-  background-color: #e9eafb; /* Lighter, slightly purplish blue */
-  color: #3d3f7e;
-  border-bottom-left-radius: 4px; /* Subtler tail */
-}
-
-.message.user {
-  align-self: flex-end;
-  background-color: #e6f7f0; /* Lighter, slightly tealish green */
-  color: #116d4d;
-  border-bottom-right-radius: 4px; /* Subtler tail */
-}
-
-.message.error {
-  align-self: flex-start;
-  background-color: #ffebee;
-  color: #c62828;
-  font-weight: 500;
-  border-bottom-left-radius: 4px;
-}
-
-/* Typing Indicator / Spinner */
-.spinner {
-  display: none;
-  align-self: flex-start;
-  margin: 0.5rem 0 1rem 1.2rem;
-}
-
-.spinner span {
-  display: inline-block;
-  background-color: #b3b8f2; /* Match computer bubble theme */
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin: 0 2px;
-  animation: bounce 1.4s infinite ease-in-out both;
-}
-
+.message { max-width: 80%; margin-bottom: 1rem; padding: 0.8rem 1.2rem; border-radius: 16px; line-height: 1.5; word-wrap: break-word; position: relative; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); }
+.message.computer { align-self: flex-start; background-color: #e9eafb; color: #3d3f7e; border-bottom-left-radius: 4px; }
+.message.user { align-self: flex-end; background-color: #e6f7f0; color: #116d4d; border-bottom-right-radius: 4px; }
+.message.error { align-self: flex-start; background-color: #ffebee; color: #c62828; font-weight: 500; border-bottom-left-radius: 4px; }
+.spinner { display: none; align-self: flex-start; margin: 0.5rem 0 1rem 1.2rem; }
+.spinner span { display: inline-block; background-color: #b3b8f2; width: 8px; height: 8px; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
 .spinner span:nth-child(1) { animation-delay: -0.32s; }
 .spinner span:nth-child(2) { animation-delay: -0.16s; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
 
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1.0); }
-}
 
 /* Chat Input Area */
 .chat-input {
-  /* CRITICAL: Prevent footer from shrinking */
-  flex-shrink: 0;
+  /* Make footer stick to the bottom */
+  position: sticky;
+  bottom: 0;
+  z-index: 10; /* Ensure it's above scrolling content */
+  /* Keep existing styles */
+  flex-shrink: 0; /* Prevent shrinking */
   padding: 1rem 1.5rem;
-  background-color: #ffffff;
+  background-color: #ffffff; /* Ensure background covers content */
   border-top: 1px solid #e8e8e8;
 }
 
 /* ... (rest of #question-form, #question-input, button styles remain the same) ... */
-#question-form {
-  display: flex;
-  width: 100%;
-  gap: 0.75rem; /* Increased gap */
-}
-
-#question-input {
-  flex: 1;
-  padding: 0.8rem 1.1rem; /* Adjusted padding */
-  border: 1px solid #dcdcdc; /* Lighter border */
-  border-radius: 8px; /* Less rounded */
-  font-size: 1rem;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-}
-
-#question-input:focus {
-  outline: none;
-  border-color: #667eea; /* Use theme color */
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); /* Subtle focus ring */
-}
-
-#question-form button {
-  /* New Button Style: Solid color */
-  background-color: #667eea; /* Primary theme color */
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1.6rem; /* Adjusted padding */
-  border-radius: 8px; /* Match input */
-  font-size: 1rem;
-  font-weight: 500; /* Slightly lighter weight */
-  cursor: pointer;
-  transition: background-color .2s ease, transform 0.1s ease; /* Added transform transition */
-}
-
-#question-form button:hover:not(:disabled) {
-  background-color: #5a6fcf; /* Slightly darker shade on hover */
-  transform: translateY(-1px); /* Lift effect */
-}
-
-#question-form button:active:not(:disabled) {
-    transform: translateY(0px); /* Press down effect */
-    background-color: #4d5eb0; /* Even darker when pressed */
-}
+#question-form { display: flex; width: 100%; gap: 0.75rem; }
+#question-input { flex: 1; padding: 0.8rem 1.1rem; border: 1px solid #dcdcdc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+#question-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); }
+#question-form button { background-color: #667eea; color: #fff; border: none; padding: 0.8rem 1.6rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color .2s ease, transform 0.1s ease; }
+#question-form button:hover:not(:disabled) { background-color: #5a6fcf; transform: translateY(-1px); }
+#question-form button:active:not(:disabled) { transform: translateY(0px); background-color: #4d5eb0; }
+#question-form button:disabled { background-color: #b8c0e0; cursor: not-allowed; opacity: 0.8; transform: none; }
 
 
-#question-form button:disabled {
-  background-color: #b8c0e0; /* Desaturated theme color */
-  cursor: not-allowed;
-  opacity: 0.8;
-  transform: none; /* No hover/active effect when disabled */
-}
-
-/* Post Game Section needs to be scrollable if content overflows */
+/* Post Game Section needs to be handled differently */
 #post-game-section {
-  /* Allow this section itself to scroll if it gets too long on small screens */
+  /* It should likely appear WITHIN the scrollable area
+     OR overlay the whole chat container. Let's assume
+     it replaces the messages for now. */
+  /* It needs to be scrollable itself if content is long */
   overflow-y: auto;
-  /* It should be part of the main scroll flow when visible, not fixed height */
-  /* Remove fixed height if any, ensure it's displayed as block */
   padding: 1.5rem;
-  background-color: #f9f9fb; /* Match chat background */
-  border-top: 1px solid #e8e8e8;
-  display: none; /* Keep hidden initially */
+  background-color: #f9f9fb;
+  /* Will be displayed by JS, potentially taking the 'flex: 1' space */
+   /* Initially hidden */
+   display: none;
+   /* Ensure it takes up the main area when shown */
+   flex: 1 1 auto;
+   min-height: 0; /* Important for flex shrinking */
 }
 
+/* Make sure post-game section doesn't push footer off screen */
+/* This might require JS intervention to hide the normal chat-messages
+   when post-game is shown, rather than having both in the flex flow. */
 
-/* ... (rest of #post-game-section styles, score, share, leaderboard remain largely the same) ... */
-
-#post-game-section h2 {
-  font-size: 1.3rem; /* Adjusted size */
-  color: #444; /* Slightly softer color */
-  margin-bottom: 1.2rem;
-  text-align: center;
-  font-weight: 600;
-}
-
-/* Score Submission Form */
-#score-submission {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-    max-width: 400px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#score-submission input[type="text"] {
-  padding: 0.8rem 1rem;
-  border: 1px solid #dcdcdc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
-#score-submission input[type="text"]:focus {
-   outline: none;
-   border-color: #667eea;
-   box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
-}
-
-#submit-score-button {
-  background: #28a745;
-  color: #fff;
-  border: none;
-  padding: 0.8rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-#submit-score-button:hover:not(:disabled) {
-  background: #218838;
-  transform: translateY(-1px);
-}
-#submit-score-button:active:not(:disabled) {
-  transform: translateY(0px);
-}
-
-#submit-score-button:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-/* Share Link Container */
-#share-link-container {
-  margin: 1.5rem auto;
-  padding: 1rem 1.2rem; /* Adjusted padding */
-  background-color: #e9eafb; /* Match computer bubble */
-  border-radius: 8px;
-  border: 1px solid #d8dcf3;
-  max-width: 500px;
-  text-align: center;
-  /* display: none; // Handled by JS */
-}
-
-#share-link-container p {
-  margin-bottom: 0.75rem;
-  font-size: 0.95rem; /* Adjusted size */
-  color: #3d3f7e;
-  font-weight: 500;
-}
-
-#share-link-input {
-  width: 100%;
-  padding: 0.7rem 0.9rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  margin-bottom: 0.75rem;
-  font-size: 0.9rem;
-  background-color: #fff;
-  color: #555;
-  font-family: monospace; /* Monospace for link readability */
-}
-
-#copy-link-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background .2s ease, transform 0.1s ease;
-}
-
-#copy-link-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-1px);
-}
-#copy-link-button:active {
-  transform: translateY(0px);
-}
-
-/* Leaderboard Section */
-#leaderboard-section {
-  margin-top: 1.5rem; /* Increased space */
-}
-
-#leaderboard-section h2 {
-  margin-bottom: 1rem;
-}
-
-/* Leaderboard Table */
-#leaderboard-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.07); /* Subtle shadow */
-  overflow: hidden; /* Clips content within border-radius */
-}
-
-#leaderboard-table th,
-#leaderboard-table td {
-  text-align: left;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #f0f0f0; /* Lighter border */
-  font-size: 0.9rem;
-}
-
-#leaderboard-table th {
-  background-color: #f8f9fa; /* Very light grey */
-  font-weight: 500; /* Less heavy header */
-  color: #555;
-  text-transform: uppercase; /* Uppercase headers */
-  font-size: 0.8rem; /* Smaller header font */
-  letter-spacing: 0.5px;
-}
-
-#leaderboard-table tr:last-child td {
-  border-bottom: none;
-}
-
-#leaderboard-table tr:hover {
-    background-color: #f8f9fa; /* Hover effect on rows */
-}
-
-/* Icons for win/lose */
+/* ... (rest of #post-game-section inner styles remain the same) ... */
+#post-game-section h2 { font-size: 1.3rem; color: #444; margin-bottom: 1.2rem; text-align: center; font-weight: 600; }
+#score-submission { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+#score-submission input[type="text"] { padding: 0.8rem 1rem; border: 1px solid #dcdcdc; border-radius: 8px; font-size: 1rem; }
+#score-submission input[type="text"]:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); }
+#submit-score-button { background: #28a745; color: #fff; border: none; padding: 0.8rem 1rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
+#submit-score-button:hover:not(:disabled) { background: #218838; transform: translateY(-1px); }
+#submit-score-button:active:not(:disabled) { transform: translateY(0px); }
+#submit-score-button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+#share-link-container { margin: 1.5rem auto; padding: 1rem 1.2rem; background-color: #e9eafb; border-radius: 8px; border: 1px solid #d8dcf3; max-width: 500px; text-align: center; }
+#share-link-container p { margin-bottom: 0.75rem; font-size: 0.95rem; color: #3d3f7e; font-weight: 500; }
+#share-link-input { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.9rem; background-color: #fff; color: #555; font-family: monospace; }
+#copy-link-button { background-color: #007bff; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; cursor: pointer; transition: background .2s ease, transform 0.1s ease; }
+#copy-link-button:hover { background-color: #0056b3; transform: translateY(-1px); }
+#copy-link-button:active { transform: translateY(0px); }
+#leaderboard-section { margin-top: 1.5rem; }
+#leaderboard-section h2 { margin-bottom: 1rem; }
+#leaderboard-table { width: 100%; border-collapse: collapse; background-color: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); overflow: hidden; }
+#leaderboard-table th, #leaderboard-table td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
+#leaderboard-table th { background-color: #f8f9fa; font-weight: 500; color: #555; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
+#leaderboard-table tr:last-child td { border-bottom: none; }
+#leaderboard-table tr:hover { background-color: #f8f9fa; }
 #leaderboard-table .result-win::before { content: '🏆'; margin-right: 0.5em; }
-#leaderboard-table .result-lose::before { content: '⏳'; margin-right: 0.5em; } /* Changed lose icon */
-
-#leaderboard-placeholder {
-    text-align: center;
-    padding: 2rem; /* More padding */
-    color: #888; /* Darker grey */
-    font-style: italic;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-}
-
-/* Visually Hidden Class (Keep this) */
+#leaderboard-table .result-lose::before { content: '⏳'; margin-right: 0.5em; }
+#leaderboard-placeholder { text-align: center; padding: 2rem; color: #888; font-style: italic; background-color: #f8f9fa; border-radius: 8px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
-
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-   .chat-container {
-        border-left: none;
-        border-right: none;
-        max-width: 100%;
-   }
+   .chat-container { border-left: none; border-right: none; max-width: 100%; }
 }
-
 @media (max-width: 650px) {
-  html {
-     font-size: 15px; /* Base size for smaller screens */
-  }
-
-  /* Reduce padding on key elements */
+  html { font-size: 15px; }
   .chat-header { padding: 0.8rem 1rem; }
+  /* Adjust message padding if needed for smaller screens */
   .chat-messages { padding: 1rem; }
   .chat-input { padding: 0.75rem 1rem; }
-
-  .title {
-    font-size: 1.4rem;
-    text-align: center;
-    width: 100%;
-    order: -1; /* Ensure title is visually first */
-    margin-bottom: 0.75rem;
-  }
-
-  .header-right {
-    width: 100%;
-    align-items: stretch;
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-   .mode-selection {
-     display: grid;
-     grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-     gap: 0.5rem;
-     width: 100%;
-   }
-
-   .mode-button {
-     padding: 0.5rem 0.25rem;
-     font-size: 0.75rem;
-     text-align: center;
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
-     width: 100%;
-   }
-
-   #question-counter {
-    align-self: center;
-    width: auto;
-    text-align: center;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.8rem;
-    border-radius: 15px;
-  }
-
-  .message {
-    max-width: 90%;
-    padding: 0.7rem 1rem;
-    font-size: 0.95rem; /* Slightly smaller text in bubbles */
-    border-radius: 14px;
-  }
-
-  #question-input {
-    font-size: 1rem; /* Keep input readable */
-    padding: 0.7rem 0.9rem;
-  }
-
-  #question-form button {
-    font-size: 1rem; /* Keep button text readable */
-    padding: 0.7rem 1rem; /* Slightly less horizontal padding */
-  }
-
+  .title { font-size: 1.4rem; text-align: center; width: 100%; order: -1; margin-bottom: 0.75rem; }
+  .header-right { width: 100%; align-items: stretch; flex-direction: column; gap: 0.75rem; }
+   .mode-selection { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; width: 100%; }
+   .mode-button { padding: 0.5rem 0.25rem; font-size: 0.75rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+   #question-counter { align-self: center; width: auto; text-align: center; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 15px; }
+  .message { max-width: 90%; padding: 0.7rem 1rem; font-size: 0.95rem; border-radius: 14px; }
+  #question-input { font-size: 1rem; padding: 0.7rem 0.9rem; }
+  #question-form button { font-size: 1rem; padding: 0.7rem 1rem; }
+  /* Post game section padding */
   #post-game-section { padding: 1rem; }
-
-  #score-submission,
-  #share-link-container { max-width: 95%; }
-
-  #leaderboard-table th,
-  #leaderboard-table td {
-    padding: 0.6rem 0.8rem;
-    font-size: 0.8rem;
-  }
-   #leaderboard-table th {
-     font-size: 0.7rem;
-   }
+  #score-submission, #share-link-container { max-width: 95%; }
+  #leaderboard-table th, #leaderboard-table td { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
+   #leaderboard-table th { font-size: 0.7rem; }
 }
