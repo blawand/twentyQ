@@ -4,12 +4,13 @@
   padding: 0;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  /* Allow body to grow and scroll if needed */
   height: auto;
-  min-height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: #f0f2f5;
@@ -17,32 +18,39 @@ body {
   font-size: 16px;
   color: #333;
   line-height: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem 0; /* Add some padding top/bottom */
+}
+
+.page-container {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* Space between chat and post-game */
 }
 
 /* Chat Container */
 .chat-container {
   width: 100%;
-  max-width: 760px;
-  /* Use min-height for smaller content, let it grow */
-  min-height: 100vh;
-  /* Center horizontally */
-  margin: 0 auto;
+  height: calc(
+    100vh - 4rem
+  ); /* Adjust height based on body padding, prevent full VH */
+  max-height: 800px; /* Optional: set a max height */
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
-  border-left: 1px solid #e8e8e8;
-  border-right: 1px solid #e8e8e8;
-  /* Let container manage overflow if needed, but flex items should fit */
-  overflow: hidden; /* Keep container itself from showing scrollbars */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px; /* Rounded corners for container */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden; /* Important: contain children */
 }
 
 /* Header */
 .chat-header {
-  /* Stick to top */
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
   padding: 1rem 1.5rem;
@@ -99,7 +107,7 @@ body {
   cursor: not-allowed;
   transform: none;
   opacity: 0.7;
-} /* Style for disabled */
+}
 #question-counter {
   font-size: 0.8rem;
   background-color: rgba(0, 0, 0, 0.15);
@@ -110,57 +118,54 @@ body {
 
 /* Chat Messages Area */
 .chat-messages {
-  /* Allow it to grow but also shrink. Crucially, DOES NOT scroll itself anymore */
-  flex: 1 1 auto;
-  /* Removed overflow-y: auto */
-  /* Removed -webkit-overflow-scrolling: touch */
-  /* Keep min-height: 0 for flex context */
-  min-height: 0;
+  flex: 1 1 auto; /* Takes remaining space */
+  overflow-y: auto; /* Enables internal scrolling */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  min-height: 0; /* Important for flex shrinking */
   padding: 1.5rem 1.5rem 1rem 1.5rem;
   background-color: #f9f9fb;
   display: flex;
   flex-direction: column;
-  /* Smooth scroll behavior for anchors/scrollIntoView */
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* Smooth scrolling for JS scroll */
 }
 
 .message {
   max-width: 80%;
   margin-bottom: 1rem;
   padding: 0.8rem 1.2rem;
-  border-radius: 16px;
+  border-radius: 18px; /* Slightly rounder */
   line-height: 1.5;
   word-wrap: break-word;
   position: relative;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Softer shadow */
 }
 .message.computer {
   align-self: flex-start;
   background-color: #e9eafb;
   color: #3d3f7e;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px; /* Updated radius */
 }
 .message.user {
   align-self: flex-end;
   background-color: #e6f7f0;
   color: #116d4d;
-  border-bottom-right-radius: 4px;
+  border-bottom-right-radius: 6px; /* Updated radius */
 }
 .message.error {
   align-self: flex-start;
   background-color: #ffebee;
   color: #c62828;
   font-weight: 500;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
 }
 .spinner {
-  display: none; /* Initially hidden */
+  display: none;
   align-self: flex-start;
   margin: 0.5rem 0 1rem 1.2rem;
   justify-content: center;
   align-items: center;
-  height: 24px; /* Give spinner some height */
-} /* Use flex for spinner */
+  height: 24px;
+}
 .spinner span {
   display: inline-block;
   background-color: #b3b8f2;
@@ -189,13 +194,9 @@ body {
 
 /* Chat Input Area */
 .chat-input {
-  /* Stick footer to bottom */
-  position: sticky;
-  bottom: 0;
-  z-index: 10;
-  flex-shrink: 0; /* Prevent shrinking */
+  flex-shrink: 0;
   padding: 1rem 1.5rem;
-  background-color: #ffffff; /* Ensure background covers */
+  background-color: #ffffff;
   border-top: 1px solid #e8e8e8;
 }
 
@@ -215,7 +216,7 @@ body {
 #question-input:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15); /* Subtle focus ring */
 }
 #question-form button {
   background-color: #667eea;
@@ -245,32 +246,38 @@ body {
 
 /* Post Game Section */
 #post-game-section {
-  /* Initially hidden, shown by JS */
-  display: none;
-  /* Allow it to take space but not grow infinitely */
-  flex: 0 0 auto; /* Doesn't grow or shrink, takes natural height */
+  display: none; /* Hidden by default */
+  flex-direction: column; /* Stack children vertically */
+  gap: 1.5rem; /* Space between submission/share/leaderboard */
   padding: 1.5rem;
-  background-color: #f0f2f5; /* Match body background slightly darker shade */
-  border-top: 1px solid #e0e0e0; /* Separator from chat */
-  /* Smooth scroll behavior for anchors/scrollIntoView */
-  scroll-behavior: smooth;
+  background-color: #f8f9fa; /* Slightly off-white background */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
 }
 
 #post-game-section h2 {
   font-size: 1.3rem;
   color: #444;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.5rem; /* Reduced bottom margin */
   text-align: center;
   font-weight: 600;
 }
+#score-submission,
+#share-link-container,
+#leaderboard-section {
+  background-color: #fff; /* White background for cards */
+  padding: 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
 #score-submission {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
-  max-width: 400px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 450px; /* Slightly wider */
+  margin: 0 auto; /* Center */
 }
 #score-submission input[type="text"] {
   padding: 0.8rem 1rem;
@@ -281,7 +288,7 @@ body {
 #score-submission input[type="text"]:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 #submit-score-button {
   background: #28a745;
@@ -308,12 +315,8 @@ body {
   opacity: 0.7;
 }
 #share-link-container {
-  margin: 1.5rem auto;
-  padding: 1rem 1.2rem;
-  background-color: #e9eafb;
-  border-radius: 8px;
-  border: 1px solid #d8dcf3;
-  max-width: 500px;
+  margin: 0 auto; /* Center */
+  max-width: 550px; /* Wider share container */
   text-align: center;
 }
 #share-link-container p {
@@ -329,7 +332,7 @@ body {
   border-radius: 6px;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
-  background-color: #fff;
+  background-color: #f8f9fa; /* Light background for readonly */
   color: #555;
   font-family: monospace;
 }
@@ -351,7 +354,7 @@ body {
   transform: translateY(0px);
 }
 #leaderboard-section {
-  margin-top: 1.5rem;
+  margin-top: 0; /* Remove top margin as gap handles spacing */
 }
 #leaderboard-section h2 {
   margin-bottom: 1rem;
@@ -359,9 +362,9 @@ body {
 #leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+  background-color: #fff; /* Already white from parent card */
+  border-radius: 0; /* Remove double radius */
+  box-shadow: none; /* Remove double shadow */
   overflow: hidden;
 }
 #leaderboard-table th,
@@ -373,25 +376,35 @@ body {
 }
 #leaderboard-table th {
   background-color: #f8f9fa;
-  font-weight: 500;
-  color: #555;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
+  font-weight: 600; /* Slightly bolder header */
+  color: #454954; /* Darker grey */
+  text-transform: none; /* Remove uppercase */
+  font-size: 0.85rem; /* Slightly larger */
+  letter-spacing: 0px; /* Remove letter spacing */
 }
 #leaderboard-table tr:last-child td {
   border-bottom: none;
 }
-#leaderboard-table tr:hover {
-  background-color: #f8f9fa;
+#leaderboard-table tr td:first-child,
+#leaderboard-table tr th:first-child {
+  text-align: center;
+  width: 40px;
 }
+#leaderboard-table tr td:nth-child(3), /* Qs Used column */
+#leaderboard-table tr th:nth-child(3) {
+  text-align: center;
+  width: 80px;
+}
+
 #leaderboard-table .result-win::before {
   content: "🏆";
   margin-right: 0.5em;
+  vertical-align: middle;
 }
 #leaderboard-table .result-lose::before {
   content: "⏳";
   margin-right: 0.5em;
+  vertical-align: middle;
 }
 #leaderboard-placeholder {
   text-align: center;
@@ -414,10 +427,31 @@ body {
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
+  body {
+    padding: 0; /* Remove padding on smaller screens */
+    align-items: stretch; /* Allow container to take full width */
+  }
+  .page-container {
+    max-width: 100%;
+    gap: 0; /* Remove gap, post-game will just follow */
+  }
   .chat-container {
     border-left: none;
     border-right: none;
-    max-width: 100%;
+    border-radius: 0; /* Full width, no radius */
+    height: auto; /* Let height be determined by content */
+    min-height: calc(100vh - 1px); /* Attempt to fill screen, minus border? */
+    box-shadow: none;
+    border: none;
+    /* Flex layout still applies */
+  }
+  #post-game-section {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
+    margin-top: 1px; /* Separate from chat area */
+    border-top: 1px solid #e0e0e0;
   }
 }
 @media (max-width: 650px) {
@@ -473,7 +507,9 @@ body {
     max-width: 90%;
     padding: 0.7rem 1rem;
     font-size: 0.95rem;
-    border-radius: 14px;
+    border-radius: 16px; /* Slightly smaller radius */
+    border-bottom-left-radius: 5px; /* Match user */
+    border-bottom-right-radius: 5px; /* Match computer */
   }
   #question-input {
     font-size: 1rem;
@@ -488,15 +524,24 @@ body {
     padding: 1rem;
   }
   #score-submission,
-  #share-link-container {
-    max-width: 95%;
+  #share-link-container,
+  #leaderboard-section {
+    padding: 1rem; /* Less padding inside cards */
   }
   #leaderboard-table th,
   #leaderboard-table td {
-    padding: 0.6rem 0.8rem;
+    padding: 0.6rem 0.5rem; /* Adjust padding */
     font-size: 0.8rem;
   }
   #leaderboard-table th {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
+  }
+  #leaderboard-table tr td:first-child,
+  #leaderboard-table tr th:first-child {
+    width: 30px; /* Smaller # column */
+  }
+  #leaderboard-table tr td:nth-child(3),
+  #leaderboard-table tr th:nth-child(3) {
+    width: 65px; /* Smaller Qs column */
   }
 }

@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
+const rateLimit = require("express-rate-limit"); // Import rate-limit
 const {
   GoogleGenerativeAI,
   HarmCategory,
@@ -11,6 +12,42 @@ const {
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
+
+// --- Rate Limiting Configuration ---
+app.set("trust proxy", 1); // Adjust based on your proxy setup if needed
+
+const askLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs for /api/ask
+  message: {
+    error:
+      "Too many requests to the ask endpoint from this IP, please try again after 15 minutes.",
+  },
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+const scoreLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10, // Limit each IP to 10 score submissions per hour
+  message: {
+    error: "Too many score submissions from this IP, please try again later.",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const leaderboardLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000, // 5 minutes
+  max: 50, // Limit each IP to 50 leaderboard requests per 5 minutes
+  message: {
+    error: "Too many leaderboard requests, please try again shortly.",
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// --- End Rate Limiting Configuration ---
 
 const answersFilePath = path.join(__dirname, "..", "answers.json");
 let answersData = {};
@@ -48,7 +85,7 @@ if (!process.env.GEMINI_API_KEY) {
   try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     geminiModel = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.0-flash-lite",
       safetySettings: [
         {
           category: HarmCategory.HARM_CATEGORY_HARASSMENT,
@@ -84,9 +121,7 @@ function getGameKey(date, mode) {
 function initializeGameState(date, mode) {
   const key = getGameKey(date, mode);
   if (!gameInstances[key] || gameInstances[key].gameOver) {
-    // Re-initialize if game was over
     const answer = (answersData[date] && answersData[date][mode]) || "default";
-    // Reset game state completely if game over or not found
     gameInstances[key] = {
       secretAnswer: answer,
       secretSummary: "",
@@ -105,7 +140,7 @@ function initializeGameState(date, mode) {
 
 async function getOrFetchWikiSummary(term) {
   if (!term || term.toLowerCase() === "default") {
-    return "No specific context available."; // Handle default case explicitly
+    return "No specific context available.";
   }
   try {
     console.log(`Fetching Wikipedia summary for: ${term}`);
@@ -116,12 +151,11 @@ async function getOrFetchWikiSummary(term) {
       {
         headers: {
           "User-Agent":
-            "Vercel20QuestionsGame/1.1 (contact: your-email@example.com)", // Updated version
+            "Vercel20QuestionsGame/1.1 (contact: your-email@example.com)",
         },
       }
     );
     if (!response.ok) {
-      // Handle specific errors like 404 Not Found
       if (response.status === 404) {
         console.warn(`Wikipedia page not found for "${term}".`);
         return "No specific context available.";
@@ -129,7 +163,7 @@ async function getOrFetchWikiSummary(term) {
       console.warn(
         `Wikipedia API non-OK response for "${term}": ${response.status}`
       );
-      return "Context retrieval failed."; // Indicate failure
+      return "Context retrieval failed.";
     }
     const data = await response.json();
     const summary = data && data.extract ? data.extract : "";
@@ -137,7 +171,7 @@ async function getOrFetchWikiSummary(term) {
     return summary || "No summary extract found in Wikipedia response.";
   } catch (err) {
     console.error(`Error fetching wiki summary for "${term}":`, err.message);
-    return "Error retrieving context."; // Indicate error
+    return "Error retrieving context.";
   }
 }
 
@@ -156,9 +190,16 @@ async function getGeminiResponse(prompt) {
         console.warn("Gemini response blocked due to safety settings.");
         return "Blocked";
       }
+      // Check for explicit block reason
+      if (response?.promptFeedback?.blockReason) {
+        console.warn(
+          `Gemini prompt blocked: ${response.promptFeedback.blockReason}`
+        );
+        return "Blocked";
+      }
       console.warn(
         "Gemini did not return expected text function. Response:",
-        response
+        JSON.stringify(response, null, 2) // Log the full response structure
       );
       return "Error";
     }
@@ -167,7 +208,13 @@ async function getGeminiResponse(prompt) {
       console.warn("Gemini returned empty text.");
       const finishReason = response?.candidates?.[0]?.finishReason;
       if (finishReason === "SAFETY") return "Blocked";
-      // Sometimes empty text might mean "I don't know" based on prompt, treat as No? Or Error? Let's return Error for now.
+      // Log if prompt feedback indicates a block
+      if (response?.promptFeedback?.blockReason) {
+        console.warn(
+          `Gemini prompt blocked (empty text): ${response.promptFeedback.blockReason}`
+        );
+        return "Blocked";
+      }
       return "Error";
     }
     return text;
@@ -176,23 +223,23 @@ async function getGeminiResponse(prompt) {
     if (err.message && err.message.includes("429")) {
       return "RateLimited";
     }
-    // Catch other potential API errors (e.g., billing issues, API key invalid)
     if (
       err.message &&
       (err.message.includes("API key not valid") ||
         err.message.includes("Billing account"))
     ) {
       console.error("Critical Gemini API Error (Key/Billing):", err.message);
-      // Potentially disable Gemini for a while or return a specific error
       return "ConfigError";
     }
+    // General catch-all for other errors
     return "Error";
   }
 }
 
 app.use(bodyParser.json());
 
-app.post("/api/ask", async (req, res) => {
+// Apply askLimiter specifically to the /api/ask route
+app.post("/api/ask", askLimiter, async (req, res) => {
   const { question, mode } = req.body;
   const today = new Date().toISOString().split("T")[0];
 
@@ -213,20 +260,18 @@ app.post("/api/ask", async (req, res) => {
 
   const gameState = initializeGameState(today, mode);
 
-  // Check if game is already over *before* processing the question
   if (gameState.gameOver) {
     return res.json({
       reply: `The game is over for ${mode} mode today. The answer was "${gameState.secretAnswer}". Refresh or wait until tomorrow.`,
-      questionsRemaining: gameState.questionsRemaining, // Should be 0 or less if over
+      questionsRemaining: gameState.questionsRemaining,
       gameOver: true,
       result: gameState.result,
       questionsUsed: gameState.questionsUsed,
     });
   }
-  // Double-check question limit before asking AI (belt and suspenders)
   if (gameState.questionsRemaining <= 0) {
-    gameState.gameOver = true; // Ensure state is consistent
-    gameState.result = "lose"; // Assume loss if somehow got here with 0 Qs
+    gameState.gameOver = true;
+    gameState.result = "lose";
     gameState.questionsUsed = 20;
     console.warn(
       `Attempted to ask question with ${gameState.questionsRemaining} questions remaining. Force ending game.`
@@ -245,7 +290,6 @@ app.post("/api/ask", async (req, res) => {
   const trimmedQuestion = question.trim();
 
   if (!yesNoRegex.test(trimmedQuestion)) {
-    // Don't decrement question count for invalid question format
     return res.json({
       reply:
         "That doesn't look like a standard Yes/No question (e.g., 'Is it blue?', 'Does it swim?'). Please start with a verb like Is, Are, Does, Can, etc. Question not counted.",
@@ -254,14 +298,11 @@ app.post("/api/ask", async (req, res) => {
     });
   }
 
-  // Fetch summary only if it hasn't been fetched yet for this game instance
   if (gameState.secretSummary === "") {
-    // Check if empty string (initial state)
     console.log(`Fetching summary for ${gameState.secretAnswer}`);
     gameState.secretSummary = await getOrFetchWikiSummary(
       gameState.secretAnswer
     );
-    // Log the fetched summary (or lack thereof)
     console.log(
       `Context for "${
         gameState.secretAnswer
@@ -269,9 +310,8 @@ app.post("/api/ask", async (req, res) => {
     );
   }
 
-  const factContext = gameState.secretSummary; // Use fetched summary directly
+  const factContext = gameState.secretSummary;
 
-  // --- Improved Prompt ---
   const prompt = `
 You are an AI assistant for a 20 Questions game.
 The secret answer is: "${gameState.secretAnswer}"
@@ -289,14 +329,12 @@ User Question: ${trimmedQuestion}
 Your Answer (Yes or No):`.trim();
 
   const rawAnswer = await getGeminiResponse(prompt);
-  let normalizedAnswer = "No"; // Default to No, especially if AI is unsure or context is weak
+  let normalizedAnswer = "No";
   let aiErrorOccurred = false;
 
-  // --- Handle Gemini Response ---
   if (rawAnswer === "Error" || rawAnswer === "ConfigError") {
     console.error(`Gemini processing error: ${rawAnswer}`);
     aiErrorOccurred = true;
-    // Let user retry without penalty
     return res.status(500).json({
       error:
         "Sorry, I encountered an internal problem answering. Please try asking again. Your question count was not affected.",
@@ -304,33 +342,29 @@ Your Answer (Yes or No):`.trim();
   } else if (rawAnswer === "RateLimited") {
     console.warn(`Gemini rate limited.`);
     aiErrorOccurred = true;
-    // Let user retry without penalty
     return res.status(429).json({
       error:
         "Sorry, the AI is busy right now. Please try asking again in a moment. Your question count was not affected.",
     });
   } else if (rawAnswer === "Blocked") {
-    console.warn(`Gemini response blocked due to safety settings.`);
+    console.warn(`Gemini response blocked due to safety settings or prompt.`);
     aiErrorOccurred = true;
-    // Let user retry without penalty, maybe rephrase
     return res.status(400).json({
       error:
-        "Sorry, I cannot answer that question due to content restrictions. Please ask something different. Your question count was not affected.",
+        "Sorry, I cannot answer that question due to content restrictions or the nature of the question. Please ask something different. Your question count was not affected.",
     });
   } else if (rawAnswer.trim().toLowerCase().startsWith("yes")) {
     normalizedAnswer = "Yes";
   } else {
-    normalizedAnswer = "No"; // Explicitly set to No if not Yes (catches slight variations if model adds punctuation)
+    normalizedAnswer = "No";
   }
 
-  // --- Decrement Count and Check Game Over ONLY if AI call was successful ---
-  gameState.questionsRemaining--; // Decrement only after a valid Yes/No response
-  gameState.questionsUsed = 20 - gameState.questionsRemaining; // Update questions used
+  gameState.questionsRemaining--;
+  gameState.questionsUsed = 20 - gameState.questionsRemaining;
 
   let replyText = normalizedAnswer;
   let shouldEndGame = false;
 
-  // Check for Guess AFTER decrementing (so guess uses a question)
   const guessRegex = new RegExp(
     `\\b${gameState.secretAnswer.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&")}\\b`,
     "i"
@@ -341,7 +375,6 @@ Your Answer (Yes or No):`.trim();
     gameState.result = "win";
     console.log(`Game ${getGameKey(today, mode)} won by guessing.`);
   } else if (gameState.questionsRemaining <= 0) {
-    // This condition is now met *after* the 20th question yields its Yes/No answer
     replyText = `${normalizedAnswer}. You've run out of questions! Game over. The answer was "${gameState.secretAnswer}".`;
     shouldEndGame = true;
     gameState.result = "lose";
@@ -350,7 +383,6 @@ Your Answer (Yes or No):`.trim();
 
   if (shouldEndGame) {
     gameState.gameOver = true;
-    // questionsUsed already updated
   }
 
   console.log(
@@ -366,10 +398,8 @@ Your Answer (Yes or No):`.trim();
   });
 });
 
-// --- Score and Leaderboard routes remain largely the same ---
-// (Ensure they handle potential Supabase client unavailability)
-
-app.post("/api/score", async (req, res) => {
+// Apply scoreLimiter specifically to the /api/score route
+app.post("/api/score", scoreLimiter, async (req, res) => {
   const { name, date, mode, questionsUsed, result } = req.body;
   const MAX_NAME_LENGTH = 30;
   const ALLOWED_MODES = ["easy", "medium", "difficult", "impossible"];
@@ -381,7 +411,6 @@ app.post("/api/score", async (req, res) => {
       .json({ success: false, message: "Database service unavailable." });
   }
 
-  // --- Validation remains the same ---
   if (!name || !date || !mode || questionsUsed == null || !result) {
     console.warn("Score submission rejected: Invalid data", req.body);
     return res
@@ -405,7 +434,6 @@ app.post("/api/score", async (req, res) => {
       .status(400)
       .json({ success: false, message: "Invalid game mode." });
   }
-  // Allow questionsUsed to be 20 for losses, 1 to 20 for wins
   if (
     typeof questionsUsed !== "number" ||
     questionsUsed < 1 ||
@@ -463,10 +491,11 @@ app.post("/api/score", async (req, res) => {
   }
 });
 
-app.get("/api/leaderboard", async (req, res) => {
+// Apply leaderboardLimiter specifically to the /api/leaderboard route
+app.get("/api/leaderboard", leaderboardLimiter, async (req, res) => {
   if (!supabase) {
     console.error("Leaderboard request failed: Supabase client not available.");
-    return res.status(503).json([]); // Return empty array and 503 status
+    return res.status(503).json([]);
   }
 
   const { date, mode } = req.query;
@@ -492,16 +521,16 @@ app.get("/api/leaderboard", async (req, res) => {
       .select("name, questions_used, result")
       .eq("date", date)
       .eq("mode", mode)
-      .order("result", { ascending: true }) // 'win' comes before 'lose'
+      .order("result", { ascending: true })
       .order("questions_used", { ascending: true })
-      .limit(10); // Limit to top 10
+      .limit(10);
 
     if (error) {
       console.error(
         `Supabase leaderboard fetch error (Status: ${status}):`,
         error
       );
-      throw error; // Throw error to be caught by catch block
+      throw error;
     }
 
     console.log(
@@ -517,22 +546,22 @@ app.get("/api/leaderboard", async (req, res) => {
     res.json(formattedScores);
   } catch (err) {
     console.error("Error fetching leaderboard from Supabase:", err.message);
-    // Return 500 for server-side errors during fetch
     res.status(500).json([]);
   }
 });
 
-// --- Cleanup interval remains the same ---
+// Cleanup interval
 setInterval(() => {
   const now = Date.now();
-  const oneDay = 24 * 60 * 60 * 1000;
+  const oneHour = 60 * 60 * 1000; // Check more frequently? 1 hour?
   let deletedCount = 0;
   for (const key in gameInstances) {
-    // Also cleanup instances where the game ended but wasn't cleared for some reason
+    // Clean up if older than 1 hour OR if game is over
     if (
-      now - gameInstances[key].createdAt > oneDay ||
+      now - gameInstances[key].createdAt > oneHour ||
       gameInstances[key].gameOver
     ) {
+      // More aggressive cleanup of completed games
       console.log(`Cleaning up game state for key: ${key}`);
       delete gameInstances[key];
       deletedCount++;
@@ -541,6 +570,6 @@ setInterval(() => {
   if (deletedCount > 0) {
     console.log(`Cleaned up ${deletedCount} old or finished game states.`);
   }
-}, 6 * 60 * 60 * 1000); // Run every 6 hours
+}, 15 * 60 * 1000); // Run cleanup check every 15 minutes
 
-module.exports = app; // Export the app for Vercel
+module.exports = app;
