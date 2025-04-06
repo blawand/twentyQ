@@ -6,11 +6,16 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%; /* Ensure html takes full height */
 }
 
 body {
-  height: auto;
-  min-height: 100vh;
+  height: 100%; /* Use 100% of html height */
+  /* Use dynamic viewport height for better mobile keyboard handling */
+  /* Fallback for older browsers */
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden; /* Prevent body scrolling */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: #f0f2f5;
@@ -18,34 +23,26 @@ body {
   font-size: 16px;
   color: #333;
   line-height: 1.5;
-  display: flex;
+  display: flex; /* Use flex for layout */
   justify-content: center;
-  align-items: flex-start;
-  padding: 1rem 0; /* Add some padding top/bottom */
+  align-items: flex-start; /* Align chat container top */
+  padding: 1rem 0; /* Padding for spacing from screen edges */
 }
 
-.page-container {
-  width: 100%;
-  max-width: 760px;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem; /* Space between chat and post-game */
-}
+/* Remove page-container styling */
 
 /* Chat Container */
 .chat-container {
   width: 100%;
-  height: calc(
-    100vh - 4rem
-  ); /* Adjust height based on body padding, prevent full VH */
-  max-height: 800px; /* Optional: set a max height */
+  max-width: 760px;
+  height: calc(100% - 2rem); /* Fill available body height minus padding */
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   border: 1px solid #e0e0e0;
-  border-radius: 12px; /* Rounded corners for container */
+  border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  overflow: hidden; /* Important: contain children */
+  overflow: hidden; /* Crucial: contain children */
 }
 
 /* Header */
@@ -99,6 +96,7 @@ body {
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
+/* Style for generic disabled state */
 .mode-button:disabled,
 .mode-button.disabled-mode {
   background-color: rgba(255, 255, 255, 0.1);
@@ -106,8 +104,18 @@ body {
   color: rgba(255, 255, 255, 0.5);
   cursor: not-allowed;
   transform: none;
-  opacity: 0.7;
+  opacity: 0.6; /* General disabled opacity */
 }
+/* Override for active but disabled button */
+.mode-button.active.disabled-mode {
+  background-color: #fff; /* Keep active background */
+  color: #667eea; /* Keep active text color */
+  opacity: 0.7; /* Slightly more visible than other disabled */
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none; /* Remove shadow when disabled */
+}
+
 #question-counter {
   font-size: 0.8rem;
   background-color: rgba(0, 0, 0, 0.15);
@@ -118,38 +126,38 @@ body {
 
 /* Chat Messages Area */
 .chat-messages {
-  flex: 1 1 auto; /* Takes remaining space */
-  overflow-y: auto; /* Enables internal scrolling */
-  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-  min-height: 0; /* Important for flex shrinking */
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0;
   padding: 1.5rem 1.5rem 1rem 1.5rem;
   background-color: #f9f9fb;
   display: flex;
   flex-direction: column;
-  scroll-behavior: smooth; /* Smooth scrolling for JS scroll */
+  scroll-behavior: smooth;
 }
 
 .message {
   max-width: 80%;
   margin-bottom: 1rem;
   padding: 0.8rem 1.2rem;
-  border-radius: 18px; /* Slightly rounder */
+  border-radius: 18px;
   line-height: 1.5;
   word-wrap: break-word;
   position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Softer shadow */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .message.computer {
   align-self: flex-start;
   background-color: #e9eafb;
   color: #3d3f7e;
-  border-bottom-left-radius: 6px; /* Updated radius */
+  border-bottom-left-radius: 6px;
 }
 .message.user {
   align-self: flex-end;
   background-color: #e6f7f0;
   color: #116d4d;
-  border-bottom-right-radius: 6px; /* Updated radius */
+  border-bottom-right-radius: 6px;
 }
 .message.error {
   align-self: flex-start;
@@ -216,7 +224,7 @@ body {
 #question-input:focus {
   outline: none;
   border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15); /* Subtle focus ring */
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 #question-form button {
   background-color: #667eea;
@@ -247,26 +255,32 @@ body {
 /* Post Game Section */
 #post-game-section {
   display: none; /* Hidden by default */
-  flex-direction: column; /* Stack children vertically */
-  gap: 1.5rem; /* Space between submission/share/leaderboard */
+  width: 100%; /* Take full width */
+  max-width: 760px; /* Match chat container width */
+  flex-direction: column;
+  gap: 1.5rem;
   padding: 1.5rem;
-  background-color: #f8f9fa; /* Slightly off-white background */
+  margin-top: 1.5rem; /* Space below chat container */
+  background-color: #f8f9fa;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  /* Allow it to be scrollable if content overflows on small screens */
+  overflow-y: auto;
+  max-height: calc(100% - 4rem); /* Limit height so it doesn't push chat off */
 }
 
 #post-game-section h2 {
   font-size: 1.3rem;
   color: #444;
-  margin-bottom: 0.5rem; /* Reduced bottom margin */
+  margin-bottom: 0.5rem;
   text-align: center;
   font-weight: 600;
 }
 #score-submission,
 #share-link-container,
 #leaderboard-section {
-  background-color: #fff; /* White background for cards */
+  background-color: #fff;
   padding: 1.25rem;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
@@ -276,8 +290,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  max-width: 450px; /* Slightly wider */
-  margin: 0 auto; /* Center */
+  max-width: 450px;
+  margin: 0 auto;
 }
 #score-submission input[type="text"] {
   padding: 0.8rem 1rem;
@@ -315,8 +329,8 @@ body {
   opacity: 0.7;
 }
 #share-link-container {
-  margin: 0 auto; /* Center */
-  max-width: 550px; /* Wider share container */
+  margin: 0 auto;
+  max-width: 550px;
   text-align: center;
 }
 #share-link-container p {
@@ -332,7 +346,7 @@ body {
   border-radius: 6px;
   margin-bottom: 0.75rem;
   font-size: 0.9rem;
-  background-color: #f8f9fa; /* Light background for readonly */
+  background-color: #f8f9fa;
   color: #555;
   font-family: monospace;
 }
@@ -354,7 +368,7 @@ body {
   transform: translateY(0px);
 }
 #leaderboard-section {
-  margin-top: 0; /* Remove top margin as gap handles spacing */
+  margin-top: 0;
 }
 #leaderboard-section h2 {
   margin-bottom: 1rem;
@@ -362,9 +376,9 @@ body {
 #leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #fff; /* Already white from parent card */
-  border-radius: 0; /* Remove double radius */
-  box-shadow: none; /* Remove double shadow */
+  background-color: #fff;
+  border-radius: 0;
+  box-shadow: none;
   overflow: hidden;
 }
 #leaderboard-table th,
@@ -376,11 +390,11 @@ body {
 }
 #leaderboard-table th {
   background-color: #f8f9fa;
-  font-weight: 600; /* Slightly bolder header */
-  color: #454954; /* Darker grey */
-  text-transform: none; /* Remove uppercase */
-  font-size: 0.85rem; /* Slightly larger */
-  letter-spacing: 0px; /* Remove letter spacing */
+  font-weight: 600;
+  color: #454954;
+  text-transform: none;
+  font-size: 0.85rem;
+  letter-spacing: 0px;
 }
 #leaderboard-table tr:last-child td {
   border-bottom: none;
@@ -428,30 +442,41 @@ body {
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
   body {
-    padding: 0; /* Remove padding on smaller screens */
-    align-items: stretch; /* Allow container to take full width */
-  }
-  .page-container {
-    max-width: 100%;
-    gap: 0; /* Remove gap, post-game will just follow */
+    padding: 0; /* Remove body padding */
+    align-items: stretch; /* Let children stretch */
+    /* Body still uses 100dvh */
   }
   .chat-container {
+    height: 100%; /* Fill body height */
+    max-width: 100%;
     border-left: none;
     border-right: none;
-    border-radius: 0; /* Full width, no radius */
-    height: auto; /* Let height be determined by content */
-    min-height: calc(100vh - 1px); /* Attempt to fill screen, minus border? */
-    box-shadow: none;
+    border-radius: 0;
     border: none;
-    /* Flex layout still applies */
+    box-shadow: none;
+    /* Flex layout ensures footer stays at bottom */
   }
   #post-game-section {
+    position: absolute; /* Take post-game out of flow */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20; /* Ensure it covers chat */
+    padding: 1rem;
+    margin: 0;
     border-radius: 0;
-    border-left: none;
-    border-right: none;
+    border: none;
     box-shadow: none;
-    margin-top: 1px; /* Separate from chat area */
-    border-top: 1px solid #e0e0e0;
+    background-color: rgba(
+      240,
+      242,
+      245,
+      0.98
+    ); /* Slightly transparent background */
+    backdrop-filter: blur(4px); /* Blur background */
+    overflow-y: auto; /* Allow scrolling within post-game */
+    /* display: none; is handled by JS */
   }
 }
 @media (max-width: 650px) {
@@ -507,9 +532,9 @@ body {
     max-width: 90%;
     padding: 0.7rem 1rem;
     font-size: 0.95rem;
-    border-radius: 16px; /* Slightly smaller radius */
-    border-bottom-left-radius: 5px; /* Match user */
-    border-bottom-right-radius: 5px; /* Match computer */
+    border-radius: 16px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
   #question-input {
     font-size: 1rem;
@@ -521,16 +546,16 @@ body {
   }
 
   #post-game-section {
-    padding: 1rem;
+    padding: 1rem; /* Keep padding */
   }
   #score-submission,
   #share-link-container,
   #leaderboard-section {
-    padding: 1rem; /* Less padding inside cards */
+    padding: 1rem;
   }
   #leaderboard-table th,
   #leaderboard-table td {
-    padding: 0.6rem 0.5rem; /* Adjust padding */
+    padding: 0.6rem 0.5rem;
     font-size: 0.8rem;
   }
   #leaderboard-table th {
@@ -538,10 +563,10 @@ body {
   }
   #leaderboard-table tr td:first-child,
   #leaderboard-table tr th:first-child {
-    width: 30px; /* Smaller # column */
+    width: 30px;
   }
   #leaderboard-table tr td:nth-child(3),
   #leaderboard-table tr th:nth-child(3) {
-    width: 65px; /* Smaller Qs column */
+    width: 65px;
   }
 }
