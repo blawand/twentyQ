@@ -26,8 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentInteraction = false;
 
   function initializeGame() {
-    chat.style.display = "flex";
-    postGameSection.style.display = "none";
+    // Ensure correct initial visibility states
+    chat.style.display = "flex"; // Chat should be visible
+    postGameSection.style.display = "none"; // Post-game hidden
+
+    // Clear any previous game messages if re-initializing (e.g., after refresh)
+    chat.innerHTML = "";
+    leaderboardDiv.innerHTML = ""; // Clear old leaderboard
 
     appendMessage(
       "computer",
@@ -35,8 +40,19 @@ document.addEventListener("DOMContentLoaded", () => {
     );
     handleUrlParams();
     updateModeButtons();
+    updateQuestionCounter(20); // Reset counter display
     setFormEnabled(true);
     setModeButtonsEnabled(true);
+    isGameOver = false; // Explicitly reset game over state
+    gameStarted = false; // Explicitly reset game started state
+
+    // Reset post-game section elements (important if user refreshes after game over)
+    scoreSubmissionForm.style.display = "block";
+    shareLinkContainer.style.display = "none";
+    submitScoreButton.disabled = false;
+    submitScoreButton.textContent = "Submit Score";
+    playerNameInput.value = ""; // Clear player name
+
     setTimeout(() => {
       if (chat) chat.scrollTop = chat.scrollHeight;
     }, 50);
@@ -51,9 +67,11 @@ document.addEventListener("DOMContentLoaded", () => {
     questionCounter.innerText = `20/20 remaining`;
     questionInput.value = "";
 
-    postGameSection.style.display = "none";
+    // Ensure chat is visible and clear previous messages
     chat.style.display = "flex";
     chat.innerHTML = "";
+    // Ensure post-game is hidden
+    postGameSection.style.display = "none";
 
     appendMessage(
       "computer",
@@ -62,6 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     setFormEnabled(true);
     setModeButtonsEnabled(false);
 
+    // Reset post-game elements again just in case
     shareLinkContainer.style.display = "none";
     submitScoreButton.disabled = false;
     submitScoreButton.textContent = "Submit Score";
@@ -81,19 +100,24 @@ document.addEventListener("DOMContentLoaded", () => {
     if (type === "error") {
       div.classList.add("error");
     }
-    div.textContent = text;
-    if (chat.style.display !== "none") {
-      chat.appendChild(div);
+    // Use textContent for security, but render newlines if needed
+    div.innerHTML = escapeHtml(text).replace(/\n/g, "<br>");
+
+    // Append message regardless of whether post-game is shown
+    chat.appendChild(div);
+    // Scroll chat area to bottom only if post-game is NOT visible
+    // If post-game IS visible, let the user scroll manually
+    if (postGameSection.style.display === "none") {
       chat.scrollTop = chat.scrollHeight;
-    } else {
-      console.warn("Attempted to append message while chat view is hidden.");
     }
   }
 
   function showSpinner() {
-    if (chat.style.display !== "none") {
-      chat.appendChild(spinner);
-      spinner.style.display = "block";
+    // Append spinner regardless of post-game visibility
+    chat.appendChild(spinner);
+    spinner.style.display = "flex"; // Use flex for spinner centering
+    // Scroll to show spinner only if post-game is hidden
+    if (postGameSection.style.display === "none") {
       chat.scrollTop = chat.scrollHeight;
     }
   }
@@ -114,11 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function setModeButtonsEnabled(enabled) {
     modeButtons.forEach((button) => {
       button.disabled = !enabled;
-      if (!enabled) {
-        button.classList.add("disabled-mode");
-      } else {
-        button.classList.remove("disabled-mode");
-      }
+      button.classList.toggle("disabled-mode", !enabled); // Add/remove class based on state
       button.setAttribute(
         "aria-checked",
         button.classList.contains("active").toString()
@@ -127,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updateQuestionCounter(remaining) {
-    const displayRemaining = Math.max(0, remaining);
+    const displayRemaining = Math.max(0, remaining); // Ensure counter doesn't go below 0
     questionCounter.innerText = `${displayRemaining}/20 remaining`;
   }
 
@@ -137,12 +157,14 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.toggle("active", isActive);
       button.setAttribute("aria-checked", isActive.toString());
     });
+    // Mode buttons enabled only if game hasn't started AND isn't over
     setModeButtonsEnabled(!gameStarted && !isGameOver);
     updateLeaderboardHeading();
   }
 
   function updateLeaderboardHeading() {
     if (leaderboardModeSpan) {
+      // Capitalize first letter of mode
       const modeText =
         selectedMode.charAt(0).toUpperCase() + selectedMode.slice(1);
       leaderboardModeSpan.textContent = modeText;
@@ -151,72 +173,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modeButtons.forEach((button) => {
     button.addEventListener("click", () => {
+      // Only allow mode change if game not started and not over
       if (gameStarted || isGameOver) return;
       selectedMode = button.getAttribute("data-mode");
       updateModeButtons();
       console.log(`Mode selected: ${selectedMode}`);
+      // Optional: Clear initial welcome message if mode changes before start?
+      // chat.innerHTML = '';
+      // appendMessage('computer', `Difficulty set to ${selectedMode}. Ask your first question when ready.`);
     });
   });
 
   questionForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    // Prevent submission if waiting for response, game is over, or game hasn't started yet (wait for mode selection)
     if (currentInteraction || isGameOver) return;
+
     const question = questionInput.value.trim();
     if (!question) return;
 
+    // --- Start Game Automatically on First Valid Question ---
     if (!gameStarted) {
-      startGame();
+      startGame(); // Initializes game state, shows chat, hides post-game, etc.
     }
+    // --- End Auto-Start ---
 
+    // Add user message immediately
     appendMessage("user", question);
-    questionInput.value = "";
-    setFormEnabled(false);
+    questionInput.value = ""; // Clear input after sending
+    setFormEnabled(false); // Disable form while waiting
     showSpinner();
 
     try {
       const response = await fetch("/api/ask", {
-        // Updated endpoint
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question, mode: selectedMode }),
       });
 
-      hideSpinner();
+      hideSpinner(); // Hide spinner once response is received
 
       const data = await response.json();
 
+      // Handle HTTP errors (like 500, 429, 400 from backend validation)
       if (!response.ok) {
+        // Use error message from backend JSON if available
         throw new Error(
-          data.error || `Server communication error (${response.status})`
+          data.error || `Server error (${response.status}). Please try again.`
         );
       }
-      if (data.error) {
-        // Handle application-level errors returned in JSON
-        throw new Error(data.error);
-      }
 
+      // Display AI reply (could be Yes/No or an error message handled gracefully by backend)
       appendMessage("computer", data.reply);
       updateQuestionCounter(data.questionsRemaining);
 
+      // Check if the game ended with this response
       if (data.gameOver) {
-        isGameOver = true;
+        isGameOver = true; // Set game over flag
         finalQuestionsUsed = data.questionsUsed;
         finalResult = data.result;
-        setFormEnabled(false);
-        setModeButtonsEnabled(false);
-        revealPostGameSection();
+        setFormEnabled(false); // Keep form disabled
+        setModeButtonsEnabled(false); // Keep modes disabled
+        revealPostGameSection(); // Show post-game options
       } else {
+        // Re-enable form for next question if game is not over
         setFormEnabled(true);
-        questionInput.focus();
+        questionInput.focus(); // Auto-focus for convenience
       }
     } catch (error) {
       console.error("Ask endpoint error:", error);
       hideSpinner();
+      // Display error message in chat
       appendMessage(
         "computer",
         `Error: ${error.message || "Could not get an answer."}`,
         "error"
       );
+      // Re-enable form if game is not over, so user can retry or ask something else
       if (!isGameOver) {
         setFormEnabled(true);
       }
@@ -224,19 +257,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   questionInput.addEventListener("focus", () => {
-    if (chat.style.display !== "none") {
+    // Scroll chat down when input is focused, but only if post-game is hidden
+    if (postGameSection.style.display === "none") {
       setTimeout(() => {
-        chat.scrollTop = chat.scrollHeight;
-      }, 150);
+        // Check again in case state changed quickly
+        if (chat && postGameSection.style.display === "none") {
+          chat.scrollTop = chat.scrollHeight;
+        }
+      }, 150); // Small delay might help on some browsers
     }
   });
 
   submitScoreButton.addEventListener("click", async () => {
+    // Ensure game is over and results are available
     if (!isGameOver || finalResult === null || finalQuestionsUsed === null) {
       console.error("Cannot submit score: Game result not finalized.");
+      alert("Cannot submit score - game result missing."); // User feedback
       return;
     }
     const playerName = playerNameInput.value.trim() || "Anonymous";
+    // Simple client-side validation for name length
+    if (playerName.length > 30) {
+      alert("Player name cannot exceed 30 characters.");
+      return;
+    }
     const today = new Date().toISOString().split("T")[0];
 
     submitScoreButton.disabled = true;
@@ -252,7 +296,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const res = await fetch("/api/score", {
-        // Updated endpoint
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(scoreData),
@@ -261,15 +304,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.ok && responseData.success) {
         console.log("Score submitted:", responseData.message);
-        fetchAndRenderLeaderboard(today, selectedMode);
-        showShareLink(scoreData);
-        scoreSubmissionForm.style.display = "none";
+        fetchAndRenderLeaderboard(today, selectedMode); // Refresh leaderboard
+        showShareLink(scoreData); // Show share section
+        scoreSubmissionForm.style.display = "none"; // Hide submission form after success
       } else {
-        throw new Error(responseData.message || "Failed to submit score.");
+        // Use error message from backend if available
+        throw new Error(
+          responseData.message || `Failed to submit score (${res.status})`
+        );
       }
     } catch (err) {
       console.error("Score submission error:", err);
-      alert(`Score submission failed: ${err.message}`);
+      alert(`Score submission failed: ${err.message}`); // Show error to user
+      // Re-enable button on failure
       submitScoreButton.disabled = false;
       submitScoreButton.textContent = "Submit Score";
     }
@@ -278,11 +325,13 @@ document.addEventListener("DOMContentLoaded", () => {
   copyLinkButton.addEventListener("click", () => {
     shareLinkInput.select();
     let message = "Could not copy. Please copy manually.";
+    let success = false;
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard
           .writeText(shareLinkInput.value)
           .then(() => {
+            success = true;
             copyLinkButton.textContent = "Copied!";
             setTimeout(
               () => (copyLinkButton.textContent = "Copy Share Message"),
@@ -291,8 +340,9 @@ document.addEventListener("DOMContentLoaded", () => {
           })
           .catch((clipboardErr) => {
             console.warn("Async clipboard API failed:", clipboardErr);
-            // Fallback for browsers that might fail promise but support execCommand
+            // Fallback attempt only if promise fails
             if (document.execCommand("copy")) {
+              success = true;
               copyLinkButton.textContent = "Copied!";
               setTimeout(
                 () => (copyLinkButton.textContent = "Copy Share Message"),
@@ -304,6 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       } else if (document.execCommand("copy")) {
         // Legacy fallback
+        success = true;
         copyLinkButton.textContent = "Copied!";
         setTimeout(
           () => (copyLinkButton.textContent = "Copy Share Message"),
@@ -314,7 +365,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("Copy link failed:", err);
-      alert(message);
+      if (!success) {
+        // Only alert if copy failed
+        alert(message);
+      }
     }
   });
 
@@ -325,6 +379,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const questions = params.get("questionsUsed");
     const date = params.get("date");
     const allowedModes = ["easy", "medium", "difficult", "impossible"];
+    const currentPath = window.location.pathname; // Get current path without query params
 
     if (
       sharedMode &&
@@ -335,61 +390,83 @@ document.addEventListener("DOMContentLoaded", () => {
     ) {
       const outcomeText = outcome === "win" ? "won" : "lost";
       const message = `Looks like someone shared a result with you!\nThey played on ${date} (${sharedMode} mode) and ${outcomeText} using ${questions} questions.\nThink you can do better? The ${sharedMode} mode is selected for you. Good luck!`;
+
+      // Clear existing chat before adding share message
+      chat.innerHTML = "";
       appendMessage("computer", message);
 
       selectedMode = sharedMode;
-      // updateModeButtons() is called in initializeGame
-      window.history.replaceState({}, document.title, window.location.pathname); // Clear params
+      updateModeButtons(); // Update button appearance immediately
+
+      // Clear URL params without reloading page
+      window.history.replaceState({}, document.title, currentPath);
     } else if (params.toString().length > 0) {
       // Clear invalid params if any exist
-      window.history.replaceState({}, document.title, window.location.pathname);
+      console.log("Clearing invalid URL parameters.");
+      window.history.replaceState({}, document.title, currentPath);
     }
   }
 
   function revealPostGameSection() {
-    chat.style.display = "none";
-    postGameSection.style.display = "flex";
-    postGameSection.style.flexDirection = "column";
+    // chat.style.display = 'none'; // REMOVED THIS LINE
+
+    // Show the post-game section
+    postGameSection.style.display = "flex"; // Use 'flex' as defined in CSS for layout
+    postGameSection.style.flexDirection = "column"; // Ensure content stacks vertically
 
     const today = new Date().toISOString().split("T")[0];
-    fetchAndRenderLeaderboard(today, selectedMode);
-    updateLeaderboardHeading();
+    fetchAndRenderLeaderboard(today, selectedMode); // Load leaderboard for the completed game's mode
+    updateLeaderboardHeading(); // Ensure heading matches the mode played
 
     setTimeout(() => {
-      if (scoreSubmissionForm.style.display !== "none") {
+      // Check if the element exists before trying to scroll/focus
+      if (postGameSection) {
+        postGameSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+      // Focus the name input if the form is still visible
+      if (
+        scoreSubmissionForm &&
+        scoreSubmissionForm.style.display !== "none" &&
+        playerNameInput
+      ) {
         playerNameInput.focus();
       }
-    }, 100);
+    }, 100); // Delay allows DOM updates
   }
 
   async function fetchAndRenderLeaderboard(date, mode) {
-    updateLeaderboardHeading();
-    leaderboardDiv.innerHTML = "<p>Loading leaderboard...</p>";
+    updateLeaderboardHeading(); // Ensure heading is correct
+    leaderboardDiv.innerHTML = "<p>Loading leaderboard...</p>"; // Loading indicator
     try {
       const queryParams = new URLSearchParams({ date, mode }).toString();
-      const res = await fetch(`/api/leaderboard?${queryParams}`); // Updated endpoint
+      const res = await fetch(`/api/leaderboard?${queryParams}`);
 
+      // Check for HTTP errors first
       if (!res.ok) {
-        let errorText = "Failed to fetch leaderboard";
+        let errorText = `Failed to fetch leaderboard (${res.status})`;
         try {
+          // Try parsing backend error message
           const errorJson = await res.json();
-          errorText =
-            errorJson.message || `Failed to fetch leaderboard (${res.status})`;
+          errorText = errorJson.message || errorText;
         } catch (e) {
-          errorText = `Failed to fetch leaderboard (${res.status})`;
+          // Ignore if response wasn't JSON
         }
         throw new Error(errorText);
       }
-      const scores = await res.json();
+
+      const scores = await res.json(); // Parse successful response
       renderLeaderboard(scores);
     } catch (err) {
       console.error("Leaderboard fetch error:", err);
-      leaderboardDiv.innerHTML = `<p class="error" style="color: red; text-align: center;">Could not load leaderboard: ${err.message}</p>`;
+      // Display error in the leaderboard div
+      leaderboardDiv.innerHTML = `<p class="error" style="color: red; text-align: center;">Could not load leaderboard: ${escapeHtml(
+        err.message
+      )}</p>`;
     }
   }
 
   function renderLeaderboard(scores) {
-    leaderboardDiv.innerHTML = "";
+    leaderboardDiv.innerHTML = ""; // Clear previous content/loading message
 
     if (!scores || scores.length === 0) {
       leaderboardDiv.innerHTML =
@@ -401,14 +478,18 @@ document.addEventListener("DOMContentLoaded", () => {
     table.id = "leaderboard-table";
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
-    headerRow.innerHTML = "<th>#</th><th>Name</th><th>Qs</th><th>Result</th>";
+    // Use consistent header names
+    headerRow.innerHTML =
+      "<th>#</th><th>Name</th><th>Qs Used</th><th>Result</th>";
     const tbody = table.createTBody();
 
     scores.forEach((score, index) => {
-      // Handles potential inconsistencies if backend changes field names
-      const qUsed = score.questionsUsed ?? score.questions_used ?? "?";
+      // Use safe defaults and escape HTML
+      const qUsed = score.questionsUsed ?? "?";
       const name = score.name ?? "Anonymous";
       const result = score.result ?? "unknown";
+      const resultText =
+        result === "win" ? "Win" : result === "lose" ? "Loss" : "Unknown";
 
       const row = tbody.insertRow();
       row.innerHTML = `
@@ -417,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${qUsed}</td>
                 <td class="${
                   result === "win" ? "result-win" : "result-lose"
-                }">${result === "win" ? "Win" : "Loss"}</td>
+                }">${resultText}</td>
             `;
     });
     leaderboardDiv.appendChild(table);
@@ -432,19 +513,23 @@ document.addEventListener("DOMContentLoaded", () => {
       questionsUsed: String(questionsUsed),
       date,
     });
+    // Construct URL relative to current origin and path
     const shareUrl = `${window.location.origin}${
       window.location.pathname
     }?${shareParams.toString()}`;
     const shareMessage = `I played 20 Questions (${mode}, ${date}) and ${outcomeText} the answer using ${questionsUsed} questions! Can you beat my score? 🤔 Play here: ${shareUrl}`;
 
     shareLinkInput.value = shareMessage;
-    shareLinkContainer.style.display = "block";
+    shareLinkContainer.style.display = "block"; // Show the share container
 
+    // Scroll share link into view smoothly if needed
     setTimeout(() => {
-      shareLinkContainer.scrollIntoView({
-        behavior: "smooth",
-        block: "nearest",
-      });
+      if (shareLinkContainer) {
+        shareLinkContainer.scrollIntoView({
+          behavior: "smooth",
+          block: "nearest",
+        });
+      }
     }, 100);
   }
 

@@ -4,12 +4,15 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-  /* Body doesn't scroll, container manages height */
-  overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  background-color: #f0f2f5; /* Keep your background */
+html,
+body {
+  /* Allow body to grow and scroll if needed */
+  height: auto;
+  min-height: 100%;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  background-color: #f0f2f5;
   background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d5d8de' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   font-size: 16px;
   color: #333;
@@ -20,25 +23,25 @@ html, body {
 .chat-container {
   width: 100%;
   max-width: 760px;
-  /* Use 100% of the dynamically adjusted viewport height */
-  height: 100%;
+  /* Use min-height for smaller content, let it grow */
+  min-height: 100vh;
+  /* Center horizontally */
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
   border-left: 1px solid #e8e8e8;
   border-right: 1px solid #e8e8e8;
-  /* Container itself should not scroll */
-  overflow: hidden;
+  /* Let container manage overflow if needed, but flex items should fit */
+  overflow: hidden; /* Keep container itself from showing scrollbars */
 }
 
 /* Header */
 .chat-header {
-  /* Make header stick to the top */
+  /* Stick to top */
   position: sticky;
   top: 0;
-  z-index: 10; /* Ensure it's above scrolling content */
-  /* Keep existing styles */
+  z-index: 10;
   flex-shrink: 0; /* Prevent shrinking */
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: #fff;
@@ -51,141 +54,449 @@ html, body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-/* ... (rest of .chat-header inner styles: .title, .header-right, etc. remain the same) ... */
-.title { font-size: 1.5rem; font-weight: 600; flex-shrink: 0; }
-.header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.5rem; }
-.mode-selection { display: flex; gap: 0.5rem; }
-.mode-button { background-color: rgba(255, 255, 255, 0.15); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); padding: 0.4rem 0.9rem; border-radius: 20px; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all .2s ease-in-out; white-space: nowrap; }
-.mode-button:hover:not(:disabled) { background-color: rgba(255, 255, 255, 0.3); transform: translateY(-1px); }
-.mode-button.active { background-color: #fff; color: #667eea; font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-.mode-button:disabled { background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); color: rgba(255, 255, 255, 0.5); cursor: not-allowed; transform: none; }
-#question-counter { font-size: 0.8rem; background-color: rgba(0, 0, 0, 0.15); padding: 0.3rem 0.7rem; border-radius: 15px; font-weight: 500; }
-
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.mode-selection {
+  display: flex;
+  gap: 0.5rem;
+}
+.mode-button {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
+}
+.mode-button:hover:not(:disabled):not(.disabled-mode) {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.mode-button.active {
+  background-color: #fff;
+  color: #667eea;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+.mode-button:disabled,
+.mode-button.disabled-mode {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+} /* Style for disabled */
+#question-counter {
+  font-size: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 0.3rem 0.7rem;
+  border-radius: 15px;
+  font-weight: 500;
+}
 
 /* Chat Messages Area */
 .chat-messages {
-  /* Takes up all remaining space */
+  /* Allow it to grow but also shrink. Crucially, DOES NOT scroll itself anymore */
   flex: 1 1 auto;
-  /* CRITICAL: This is the ONLY vertically scrolling element */
-  overflow-y: auto;
-  /* Recommended for performance on mobile */
-  -webkit-overflow-scrolling: touch;
-  /* Prevent flex item overflow issues */
+  /* Removed overflow-y: auto */
+  /* Removed -webkit-overflow-scrolling: touch */
+  /* Keep min-height: 0 for flex context */
   min-height: 0;
-  padding: 1.5rem 1.5rem 1rem 1.5rem; /* Adjust padding as needed */
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
   background-color: #f9f9fb;
   display: flex;
-  /* Keep messages top-to-bottom in DOM, scrolling handles view */
   flex-direction: column;
-   /* Add padding at the bottom so content doesn't hide under sticky footer */
-   /* Estimate footer height - adjust if needed */
-   /* padding-bottom: 70px;  <-- Maybe not needed if footer is truly sticky */
+  /* Smooth scroll behavior for anchors/scrollIntoView */
+  scroll-behavior: smooth;
 }
 
-/* ... (rest of .message styles remain the same) ... */
-.message { max-width: 80%; margin-bottom: 1rem; padding: 0.8rem 1.2rem; border-radius: 16px; line-height: 1.5; word-wrap: break-word; position: relative; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06); }
-.message.computer { align-self: flex-start; background-color: #e9eafb; color: #3d3f7e; border-bottom-left-radius: 4px; }
-.message.user { align-self: flex-end; background-color: #e6f7f0; color: #116d4d; border-bottom-right-radius: 4px; }
-.message.error { align-self: flex-start; background-color: #ffebee; color: #c62828; font-weight: 500; border-bottom-left-radius: 4px; }
-.spinner { display: none; align-self: flex-start; margin: 0.5rem 0 1rem 1.2rem; }
-.spinner span { display: inline-block; background-color: #b3b8f2; width: 8px; height: 8px; border-radius: 50%; margin: 0 2px; animation: bounce 1.4s infinite ease-in-out both; }
-.spinner span:nth-child(1) { animation-delay: -0.32s; }
-.spinner span:nth-child(2) { animation-delay: -0.16s; }
-@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
-
+.message {
+  max-width: 80%;
+  margin-bottom: 1rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 16px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  position: relative;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+.message.computer {
+  align-self: flex-start;
+  background-color: #e9eafb;
+  color: #3d3f7e;
+  border-bottom-left-radius: 4px;
+}
+.message.user {
+  align-self: flex-end;
+  background-color: #e6f7f0;
+  color: #116d4d;
+  border-bottom-right-radius: 4px;
+}
+.message.error {
+  align-self: flex-start;
+  background-color: #ffebee;
+  color: #c62828;
+  font-weight: 500;
+  border-bottom-left-radius: 4px;
+}
+.spinner {
+  display: none; /* Initially hidden */
+  align-self: flex-start;
+  margin: 0.5rem 0 1rem 1.2rem;
+  justify-content: center;
+  align-items: center;
+  height: 24px; /* Give spinner some height */
+} /* Use flex for spinner */
+.spinner span {
+  display: inline-block;
+  background-color: #b3b8f2;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin: 0 2px;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+.spinner span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.spinner span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+@keyframes bounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
 
 /* Chat Input Area */
 .chat-input {
-  /* Make footer stick to the bottom */
+  /* Stick footer to bottom */
   position: sticky;
   bottom: 0;
-  z-index: 10; /* Ensure it's above scrolling content */
-  /* Keep existing styles */
+  z-index: 10;
   flex-shrink: 0; /* Prevent shrinking */
   padding: 1rem 1.5rem;
-  background-color: #ffffff; /* Ensure background covers content */
+  background-color: #ffffff; /* Ensure background covers */
   border-top: 1px solid #e8e8e8;
 }
 
-/* ... (rest of #question-form, #question-input, button styles remain the same) ... */
-#question-form { display: flex; width: 100%; gap: 0.75rem; }
-#question-input { flex: 1; padding: 0.8rem 1.1rem; border: 1px solid #dcdcdc; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
-#question-input:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); }
-#question-form button { background-color: #667eea; color: #fff; border: none; padding: 0.8rem 1.6rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background-color .2s ease, transform 0.1s ease; }
-#question-form button:hover:not(:disabled) { background-color: #5a6fcf; transform: translateY(-1px); }
-#question-form button:active:not(:disabled) { transform: translateY(0px); background-color: #4d5eb0; }
-#question-form button:disabled { background-color: #b8c0e0; cursor: not-allowed; opacity: 0.8; transform: none; }
-
-
-/* Post Game Section needs to be handled differently */
-#post-game-section {
-  /* It should likely appear WITHIN the scrollable area
-     OR overlay the whole chat container. Let's assume
-     it replaces the messages for now. */
-  /* It needs to be scrollable itself if content is long */
-  overflow-y: auto;
-  padding: 1.5rem;
-  background-color: #f9f9fb;
-  /* Will be displayed by JS, potentially taking the 'flex: 1' space */
-   /* Initially hidden */
-   display: none;
-   /* Ensure it takes up the main area when shown */
-   flex: 1 1 auto;
-   min-height: 0; /* Important for flex shrinking */
+#question-form {
+  display: flex;
+  width: 100%;
+  gap: 0.75rem;
+}
+#question-input {
+  flex: 1;
+  padding: 0.8rem 1.1rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+#question-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+#question-form button {
+  background-color: #667eea;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+#question-form button:hover:not(:disabled) {
+  background-color: #5a6fcf;
+  transform: translateY(-1px);
+}
+#question-form button:active:not(:disabled) {
+  transform: translateY(0px);
+  background-color: #4d5eb0;
+}
+#question-form button:disabled {
+  background-color: #b8c0e0;
+  cursor: not-allowed;
+  opacity: 0.8;
+  transform: none;
 }
 
-/* Make sure post-game section doesn't push footer off screen */
-/* This might require JS intervention to hide the normal chat-messages
-   when post-game is shown, rather than having both in the flex flow. */
+/* Post Game Section */
+#post-game-section {
+  /* Initially hidden, shown by JS */
+  display: none;
+  /* Allow it to take space but not grow infinitely */
+  flex: 0 0 auto; /* Doesn't grow or shrink, takes natural height */
+  padding: 1.5rem;
+  background-color: #f0f2f5; /* Match body background slightly darker shade */
+  border-top: 1px solid #e0e0e0; /* Separator from chat */
+  /* Smooth scroll behavior for anchors/scrollIntoView */
+  scroll-behavior: smooth;
+}
 
-/* ... (rest of #post-game-section inner styles remain the same) ... */
-#post-game-section h2 { font-size: 1.3rem; color: #444; margin-bottom: 1.2rem; text-align: center; font-weight: 600; }
-#score-submission { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
-#score-submission input[type="text"] { padding: 0.8rem 1rem; border: 1px solid #dcdcdc; border-radius: 8px; font-size: 1rem; }
-#score-submission input[type="text"]:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2); }
-#submit-score-button { background: #28a745; color: #fff; border: none; padding: 0.8rem 1rem; border-radius: 8px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; }
-#submit-score-button:hover:not(:disabled) { background: #218838; transform: translateY(-1px); }
-#submit-score-button:active:not(:disabled) { transform: translateY(0px); }
-#submit-score-button:disabled { background: #ccc; cursor: not-allowed; transform: none; }
-#share-link-container { margin: 1.5rem auto; padding: 1rem 1.2rem; background-color: #e9eafb; border-radius: 8px; border: 1px solid #d8dcf3; max-width: 500px; text-align: center; }
-#share-link-container p { margin-bottom: 0.75rem; font-size: 0.95rem; color: #3d3f7e; font-weight: 500; }
-#share-link-input { width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #ccc; border-radius: 6px; margin-bottom: 0.75rem; font-size: 0.9rem; background-color: #fff; color: #555; font-family: monospace; }
-#copy-link-button { background-color: #007bff; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 6px; font-size: 0.9rem; cursor: pointer; transition: background .2s ease, transform 0.1s ease; }
-#copy-link-button:hover { background-color: #0056b3; transform: translateY(-1px); }
-#copy-link-button:active { transform: translateY(0px); }
-#leaderboard-section { margin-top: 1.5rem; }
-#leaderboard-section h2 { margin-bottom: 1rem; }
-#leaderboard-table { width: 100%; border-collapse: collapse; background-color: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.07); overflow: hidden; }
-#leaderboard-table th, #leaderboard-table td { text-align: left; padding: 0.8rem 1rem; border-bottom: 1px solid #f0f0f0; font-size: 0.9rem; }
-#leaderboard-table th { background-color: #f8f9fa; font-weight: 500; color: #555; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.5px; }
-#leaderboard-table tr:last-child td { border-bottom: none; }
-#leaderboard-table tr:hover { background-color: #f8f9fa; }
-#leaderboard-table .result-win::before { content: '🏆'; margin-right: 0.5em; }
-#leaderboard-table .result-lose::before { content: '⏳'; margin-right: 0.5em; }
-#leaderboard-placeholder { text-align: center; padding: 2rem; color: #888; font-style: italic; background-color: #f8f9fa; border-radius: 8px; }
-.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+#post-game-section h2 {
+  font-size: 1.3rem;
+  color: #444;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+}
+#score-submission {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+#score-submission input[type="text"] {
+  padding: 0.8rem 1rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+#score-submission input[type="text"]:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+#submit-score-button {
+  background: #28a745;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+#submit-score-button:hover:not(:disabled) {
+  background: #218838;
+  transform: translateY(-1px);
+}
+#submit-score-button:active:not(:disabled) {
+  transform: translateY(0px);
+}
+#submit-score-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+#share-link-container {
+  margin: 1.5rem auto;
+  padding: 1rem 1.2rem;
+  background-color: #e9eafb;
+  border-radius: 8px;
+  border: 1px solid #d8dcf3;
+  max-width: 500px;
+  text-align: center;
+}
+#share-link-container p {
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  color: #3d3f7e;
+  font-weight: 500;
+}
+#share-link-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #555;
+  font-family: monospace;
+}
+#copy-link-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+#copy-link-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+#copy-link-button:active {
+  transform: translateY(0px);
+}
+#leaderboard-section {
+  margin-top: 1.5rem;
+}
+#leaderboard-section h2 {
+  margin-bottom: 1rem;
+}
+#leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+#leaderboard-table th,
+#leaderboard-table td {
+  text-align: left;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+}
+#leaderboard-table th {
+  background-color: #f8f9fa;
+  font-weight: 500;
+  color: #555;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+#leaderboard-table tr:last-child td {
+  border-bottom: none;
+}
+#leaderboard-table tr:hover {
+  background-color: #f8f9fa;
+}
+#leaderboard-table .result-win::before {
+  content: "🏆";
+  margin-right: 0.5em;
+}
+#leaderboard-table .result-lose::before {
+  content: "⏳";
+  margin-right: 0.5em;
+}
+#leaderboard-placeholder {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-style: italic;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-   .chat-container { border-left: none; border-right: none; max-width: 100%; }
+  .chat-container {
+    border-left: none;
+    border-right: none;
+    max-width: 100%;
+  }
 }
 @media (max-width: 650px) {
-  html { font-size: 15px; }
-  .chat-header { padding: 0.8rem 1rem; }
-  /* Adjust message padding if needed for smaller screens */
-  .chat-messages { padding: 1rem; }
-  .chat-input { padding: 0.75rem 1rem; }
-  .title { font-size: 1.4rem; text-align: center; width: 100%; order: -1; margin-bottom: 0.75rem; }
-  .header-right { width: 100%; align-items: stretch; flex-direction: column; gap: 0.75rem; }
-   .mode-selection { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; width: 100%; }
-   .mode-button { padding: 0.5rem 0.25rem; font-size: 0.75rem; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
-   #question-counter { align-self: center; width: auto; text-align: center; padding: 0.4rem 0.8rem; font-size: 0.8rem; border-radius: 15px; }
-  .message { max-width: 90%; padding: 0.7rem 1rem; font-size: 0.95rem; border-radius: 14px; }
-  #question-input { font-size: 1rem; padding: 0.7rem 0.9rem; }
-  #question-form button { font-size: 1rem; padding: 0.7rem 1rem; }
-  /* Post game section padding */
-  #post-game-section { padding: 1rem; }
-  #score-submission, #share-link-container { max-width: 95%; }
-  #leaderboard-table th, #leaderboard-table td { padding: 0.6rem 0.8rem; font-size: 0.8rem; }
-   #leaderboard-table th { font-size: 0.7rem; }
+  html {
+    font-size: 15px;
+  }
+  .chat-header {
+    padding: 0.8rem 1rem;
+  }
+  .chat-messages {
+    padding: 1rem;
+  }
+  .chat-input {
+    padding: 0.75rem 1rem;
+  }
+  .title {
+    font-size: 1.4rem;
+    text-align: center;
+    width: 100%;
+    order: -1;
+    margin-bottom: 0.75rem;
+  }
+  .header-right {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .mode-selection {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    width: 100%;
+  }
+  .mode-button {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+  #question-counter {
+    align-self: center;
+    width: auto;
+    text-align: center;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
+    border-radius: 15px;
+  }
+  .message {
+    max-width: 90%;
+    padding: 0.7rem 1rem;
+    font-size: 0.95rem;
+    border-radius: 14px;
+  }
+  #question-input {
+    font-size: 1rem;
+    padding: 0.7rem 0.9rem;
+  }
+  #question-form button {
+    font-size: 1rem;
+    padding: 0.7rem 1rem;
+  }
+
+  #post-game-section {
+    padding: 1rem;
+  }
+  #score-submission,
+  #share-link-container {
+    max-width: 95%;
+  }
+  #leaderboard-table th,
+  #leaderboard-table td {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.8rem;
+  }
+  #leaderboard-table th {
+    font-size: 0.7rem;
+  }
 }
